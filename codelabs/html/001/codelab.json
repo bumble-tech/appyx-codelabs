@@ -1,0 +1,24 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2022-08-04T17:15:31+02:00",
+  "id": "001",
+  "duration": 10,
+  "title": "Add your title here",
+  "summary": "Insert your summary here",
+  "source": "../markdown/001.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "android",
+    "appyx"
+  ],
+  "tags": [
+    "web"
+  ],
+  "url": "001"
+}
