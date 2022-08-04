@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.bumble.appyx_codelabs.simpleapp.ui.theme.SimpleAppTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
