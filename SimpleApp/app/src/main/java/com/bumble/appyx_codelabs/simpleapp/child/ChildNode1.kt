@@ -1,4 +1,4 @@
-package com.bumble.appyx_codelabs.simpleapp.loggedin
+package com.bumble.appyx_codelabs.simpleapp.child
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +14,7 @@ import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx_codelabs.simpleapp.ui.theme.sizzling_red
 
-class LoggedInNode(buildContext: BuildContext) : Node(buildContext) {
+class ChildNode1(buildContext: BuildContext) : Node(buildContext) {
 
     @Composable
     override fun View(modifier: Modifier) {
