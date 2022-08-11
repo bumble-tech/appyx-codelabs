@@ -17,7 +17,7 @@ import com.bumble.appyx.core.node.Node
 import com.bumble.appyx_codelabs.simpleapp.ui.theme.md_deep_purple_50
 import com.bumble.appyx_codelabs.simpleapp.ui.theme.md_grey_500
 
-class ChildNode2(
+class LoggedOutNode(
     buildContext: BuildContext,
     private val callback: () -> Unit
 ) : Node(buildContext) {

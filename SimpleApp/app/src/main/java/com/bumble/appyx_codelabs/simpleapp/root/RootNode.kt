@@ -19,11 +19,11 @@ import com.bumble.appyx.routingsource.backstack.activeRouting
 import com.bumble.appyx.routingsource.backstack.operation.pop
 import com.bumble.appyx.routingsource.backstack.operation.push
 import com.bumble.appyx.routingsource.backstack.transitionhandler.rememberBackstackFader
-import com.bumble.appyx_codelabs.simpleapp.loggedin.ChildNode1
-import com.bumble.appyx_codelabs.simpleapp.loggedout.ChildNode2
+import com.bumble.appyx_codelabs.simpleapp.loggedin.LoggedInNode
+import com.bumble.appyx_codelabs.simpleapp.loggedout.LoggedOutNode
 import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing
-import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing.Child1
-import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing.Child2
+import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing.LoggedOut
+import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing.LoggedIn
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
@@ -31,7 +31,7 @@ import kotlinx.parcelize.Parcelize
 class RootNode(
     buildContext: BuildContext,
     private val backStack: BackStack<Routing> = BackStack(
-        initialElement = Child1,
+        initialElement = LoggedOut,
         savedStateMap = buildContext.savedStateMap
     )
 ) : ParentNode<Routing>(
@@ -41,34 +41,21 @@ class RootNode(
 
     sealed class Routing : Parcelable {
         @Parcelize
-        object Child1 : Routing()
+        object LoggedOut : Routing()
 
         @Parcelize
-        object Child2 : Routing()
+        object LoggedIn : Routing()
     }
 
     override fun resolve(routing: Routing, buildContext: BuildContext): Node =
         when (routing) {
-            is Child1 -> ChildNode1(buildContext)
-            is Child2 -> ChildNode2(buildContext, ::swapChildren)
+            is LoggedOut -> LoggedOutNode(buildContext, ::swapChildren)
+            is LoggedIn -> LoggedInNode(buildContext)
         }
-
-    init {
-        initAnimation()
-    }
-
-    private fun initAnimation() {
-        lifecycle.coroutineScope.launch {
-            while (true) {
-                delay(2000)
-                swapChildren()
-            }
-        }
-    }
 
     private fun swapChildren() {
-        if (backStack.activeRouting == Child1) {
-            backStack.push(Child2)
+        if (backStack.activeRouting == LoggedOut) {
+            backStack.push(LoggedIn)
         } else {
             backStack.pop()
         }
