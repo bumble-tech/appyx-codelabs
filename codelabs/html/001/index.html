@@ -57,28 +57,90 @@
       </google-codelab-step>
     
       <google-codelab-step label="1. Defining our new base structure" duration="0">
-        <p>create new folder for log-out log-in Move Children1 to loggedin Move Children2 to loggedout Add child subfolder for inside each folder</p>
+        <p>create new folder for log-out log-in Move Child1 to loggedin Rename Child1 to LoggedInNode Move Child1 to loggedout Rename Child1 to LoggedOutNode</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="2. Clean up Root-node" duration="0">
-        <ul>
-<li>Define each configuration</li>
-<li>Use dummy nodes</li>
-<li>Compile an check? Problem is that we don&#39;t have navigation here</li>
+      <google-codelab-step label="2. Clean up nodes" duration="0">
+        <p>Root:</p>
+<ul>
+<li>Rename configuration: Child1 -&gt; LoggedOut and Child2 -&gt; LoggedIn</li>
+<li>Remove unrequired code: initAnimation and init block LoggedOutNode:</li>
+<li>Change button text to &#34;Log In&#34;</li>
+<li>Change text to &#34;This is LoggedOutNode&#34; LoggedInNode:</li>
+<li>Change text to &#34;This is LoggedIntNode&#34;</li>
 </ul>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="3. Add manual navigation between children" duration="0">
-        
+      <google-codelab-step label="3. Modifying history navigation" duration="0">
+        <ul>
+<li>If you install the app right now, the expected behaviour would be:</li>
+<li>Root node is created and loggedOut configuration is set(as it is the default).</li>
+<li>If you click the button, LoggeIn is created</li>
+<li>If you press back, previous node is shown. So at this point, we have a super simple case where by clicking on the button you are simulating the logging action. However, pressing back you are navigating to the previous screen, that&#39;s not what we are looking for, as it would represent that we are logging out the user when pressing back, so let&#39;s change that:</li>
+</ul>
+<p>To do so, open rootNode and let&#39;s change the push operation in &#34;swapChildren&#34; for &#34;replace&#34;. You can also remove the if block and the pop. By doing so, when calling swapChildren we are removing loggedout from the history and add logged in. So if you compile now, you should not &#34;logged out&#34;(go the previous node) when clicking back.</p>
+<p>[Insert gif of the app navigation state at this point]</p>
+<p>That&#39;s better! Now we don&#39;t &#34;logged out&#34; the user when we click back, however this kind of navigation is not realistic, we want to navigate the app base on some loggin status and not just replace the nodes when clicking a button. So let&#39;s do this.</p>
+
 
       </google-codelab-step>
     
-      <google-codelab-step label="format info" duration="0">
-        <p>Check format guide https://github.com/googlecodelabs/tools/blob/main/FORMAT-GUIDE.md</p>
+      <google-codelab-step label="4. Creating the state" duration="0">
+        <p>Create some interface to log in, log out, and expose state. We can do a simple implementation with SharedPreferences</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5. Control root navigation based on state" duration="0">
+        <p>change root node so navigation is controlled based on state add log out button</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6. Improving the logged-out state ui" duration="0">
+        <ul>
+<li>Make LoggedOutNode to extend parent node</li>
+<li>Create configurations: User &amp; Password (just input field)</li>
+<li>Update UI: Title, box with Children inside  and &#34;Next/Log In&#34; button</li>
+<li>Dummy nodes for both states</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7. Creating LoggedOut children" duration="0">
+        <ul>
+<li>Create the actual nodes</li>
+<li>Replace the dummies</li>
+<li>add navigation -&gt; state based or callback based for this? -&gt; Let&#39;s keep it simple! Let&#39;s improve logged-in ui!</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8. Improving the logged-in state ui" duration="0">
+        <ul>
+<li>Make LoggedInNode to extend parent node</li>
+<li>Update UI: Title, box with Children inside</li>
+<li>Create configurations: Summary(Box with textView &#34;You are logged as $Username&#34;) and LogOut(Just a log out button)</li>
+<li>Dummy nodes for both states</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9. Creating LoggedIn children" duration="0">
+        <ul>
+<li>Create the actual nodes</li>
+<li>Replace the dummies</li>
+<li>add navigation -&gt; state based or callback based for this? -&gt; Let&#39;s keep it simple!</li>
+<li>add animation</li>
+</ul>
+<p>Check format guide https://github.com/googlecodelabs/tools/blob/main/FORMAT-GUIDE.md</p>
 
 
       </google-codelab-step>
