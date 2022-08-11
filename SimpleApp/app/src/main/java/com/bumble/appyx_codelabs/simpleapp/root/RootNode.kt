@@ -9,23 +9,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.coroutineScope
 import com.bumble.appyx.core.composable.Children
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.ParentNode
 import com.bumble.appyx.routingsource.backstack.BackStack
-import com.bumble.appyx.routingsource.backstack.activeRouting
-import com.bumble.appyx.routingsource.backstack.operation.pop
-import com.bumble.appyx.routingsource.backstack.operation.push
+import com.bumble.appyx.routingsource.backstack.operation.replace
 import com.bumble.appyx.routingsource.backstack.transitionhandler.rememberBackstackFader
 import com.bumble.appyx_codelabs.simpleapp.loggedin.LoggedInNode
 import com.bumble.appyx_codelabs.simpleapp.loggedout.LoggedOutNode
 import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing
-import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing.LoggedOut
 import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing.LoggedIn
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing.LoggedOut
 import kotlinx.parcelize.Parcelize
 
 class RootNode(
@@ -54,11 +49,7 @@ class RootNode(
         }
 
     private fun swapChildren() {
-        if (backStack.activeRouting == LoggedOut) {
-            backStack.push(LoggedIn)
-        } else {
-            backStack.pop()
-        }
+        backStack.replace(LoggedIn)
     }
 
     @Composable
