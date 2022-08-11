@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
-import com.bumble.appyx_codelabs.simpleapp.ui.theme.sizzling_red
+import com.bumble.appyx_codelabs.simpleapp.solution.ui.theme.sizzling_red
 
 class LoggedInNode(buildContext: BuildContext) : Node(buildContext) {
 
@@ -26,7 +26,7 @@ class LoggedInNode(buildContext: BuildContext) : Node(buildContext) {
                 .fillMaxSize()
         ) {
             Text(
-                text = "This is Child 1",
+                text = "This is LoggedInNode",
                 modifier = Modifier
                     .padding(vertical = 8.dp)
             )

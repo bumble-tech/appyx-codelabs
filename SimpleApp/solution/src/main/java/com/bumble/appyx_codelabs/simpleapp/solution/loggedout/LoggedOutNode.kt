@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
-import com.bumble.appyx_codelabs.simpleapp.ui.theme.md_deep_purple_50
-import com.bumble.appyx_codelabs.simpleapp.ui.theme.md_grey_500
+import com.bumble.appyx_codelabs.simpleapp.solution.ui.theme.md_deep_purple_50
+import com.bumble.appyx_codelabs.simpleapp.solution.ui.theme.md_grey_500
 
 class LoggedOutNode(
     buildContext: BuildContext,
@@ -32,11 +32,10 @@ class LoggedOutNode(
                 .fillMaxSize()
         ) {
             Text(
-                text = "This is Child 2",
+                text = "This is LoggedOut Node",
                 modifier = Modifier
                     .padding(vertical = 8.dp)
             )
-
             Button(
                 onClick = callback,
                 colors = ButtonDefaults.buttonColors(
@@ -45,7 +44,7 @@ class LoggedOutNode(
                 modifier = Modifier
                     .padding(bottom = 8.dp)
             ) {
-                Text("Swap now")
+                Text("Log In")
             }
         }
     }
