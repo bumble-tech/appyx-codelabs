@@ -19,8 +19,8 @@ import com.bumble.appyx.routingsource.backstack.activeRouting
 import com.bumble.appyx.routingsource.backstack.operation.pop
 import com.bumble.appyx.routingsource.backstack.operation.push
 import com.bumble.appyx.routingsource.backstack.transitionhandler.rememberBackstackFader
-import com.bumble.appyx_codelabs.simpleapp.child.ChildNode1
-import com.bumble.appyx_codelabs.simpleapp.child.ChildNode2
+import com.bumble.appyx_codelabs.simpleapp.loggedin.ChildNode1
+import com.bumble.appyx_codelabs.simpleapp.loggedout.ChildNode2
 import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing
 import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing.Child1
 import com.bumble.appyx_codelabs.simpleapp.root.RootNode.Routing.Child2

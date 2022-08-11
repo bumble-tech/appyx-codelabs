@@ -9,7 +9,7 @@ https://www.python.org/downloads/
 
 - claat
 
-Google cli to easily create codelabs using markdown._
+Google cli to easily create codelabs using markdown.
 
 https://github.com/googlecodelabs/tools#ok-how-do-i-use-it
 

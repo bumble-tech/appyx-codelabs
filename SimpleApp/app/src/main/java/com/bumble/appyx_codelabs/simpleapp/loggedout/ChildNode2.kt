@@ -1,4 +1,4 @@
-package com.bumble.appyx_codelabs.simpleapp.child
+package com.bumble.appyx_codelabs.simpleapp.loggedout
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
