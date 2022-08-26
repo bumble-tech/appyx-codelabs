@@ -10,34 +10,20 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.bumble.appyx.core.integration.NodeHost
+import com.bumble.appyx.core.integrationpoint.NodeActivity
+import com.bumble.appyx_codelabs.firststeps.solution.root.RootNode
 import com.bumble.appyx_codelabs.firststeps.solution.ui.theme.FirstStepsTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity : NodeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             FirstStepsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
+                NodeHost(integrationPoint = integrationPoint){
+                    RootNode(it, "Jon Doe")
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    FirstStepsTheme {
-        Greeting("Android")
     }
 }

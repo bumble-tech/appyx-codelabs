@@ -47,6 +47,24 @@ android {
 
 dependencies {
 
+    // Core
+    implementation "com.bumble.appyx:core:$appyx_version"
+
+    // Test rules and utility classes for testing on Android
+    androidTestImplementation "com.bumble.appyx:testing-ui:$appyx_version"
+
+    // Utility classes for unit testing
+    testImplementation "com.bumble.appyx:testing-unit-common:$appyx_version"
+
+    // Test rules and utility classes for unit testing using JUnit4
+    testImplementation "com.bumble.appyx:testing-junit4:$appyx_version"
+
+    // Test extensions and utility classes for unit testing using JUnit5
+    testImplementation "com.bumble.appyx:testing-junit5:$appyx_version"
+
+    // We need appcompat for node activity
+    implementation "androidx.appcompat:appcompat:$appCompat_version"
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
