@@ -3,11 +3,11 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2022-08-11T15:52:37+02:00",
+  "updated": "2022-09-09T16:34:56+02:00",
   "id": "001",
   "duration": 0,
-  "title": "Create a Simple App with Appyx",
-  "summary": "Insert your summary here",
+  "title": "Appyx First Steps",
+  "summary": "Basic set-up for an Appyx based project",
   "source": "../markdown/001.md",
   "theme": "",
   "status": [
@@ -15,7 +15,8 @@
   ],
   "category": [
     "android",
-    "appyx"
+    "appyx",
+    "compose"
   ],
   "tags": [
     "web"
