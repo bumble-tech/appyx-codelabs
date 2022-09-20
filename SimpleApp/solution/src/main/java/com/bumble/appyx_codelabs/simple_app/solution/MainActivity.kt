@@ -13,7 +13,7 @@ class MainActivity : NodeActivity() {
         setContent {
             SimpleAppTheme {
                 NodeHost(integrationPoint = integrationPoint) {
-                    RootNode(it, "Jon Doe")
+                    RootNode(it)
                 }
             }
         }
