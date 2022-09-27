@@ -61,11 +61,12 @@ def generatCodelab(parameters):
     pattern = re.compile(CODELAB_NAME_PATTERN)
     codeLabId = getCodelabId(parameters)
     codeLabFile = codeLabId+".md"
-    if pattern.match(codeLabFile):
-        generateHTML(codeLabId)
-    else:
-        print("Couldn't find codelab file {}".format(codeLabFile))
-        printMan()
+    generateHTML(codeLabId)
+    # if pattern.match(codeLabFile):
+        
+    # else:
+        # print("Couldn't find codelab file {}".format(codeLabFile))
+        # printMan()
 
 
 def checkArg(parameters):

@@ -1,0 +1,24 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2022-09-27T13:24:36+01:00",
+  "id": "appyx-hello-world",
+  "duration": 8,
+  "title": "Hello World with Appyx",
+  "authors": "Vlad",
+  "summary": "Hello World with Appyx",
+  "source": "../markdown/appyx-hello-world.md",
+  "theme": "",
+  "status": [
+    "wip"
+  ],
+  "category": [
+    "introduction"
+  ],
+  "tags": [
+    "appyx"
+  ],
+  "url": "appyx-hello-world"
+}

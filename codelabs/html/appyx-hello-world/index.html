@@ -1,0 +1,182 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Hello World with Appyx</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="appyx-hello-world"
+                  title="Hello World with Appyx"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Before you begin" duration="1">
+        <p class="image-container"><img alt="demo" style="width: 200.00px" src="img/2c319f1b55d3387d.png"></p>
+<p><a href="https://bumble-tech.github.io/appyx/" target="_blank">Appyx</a> is a model driven navigation library for Jetpack Compose.</p>
+<p>This tutorial will walk you through creating a Hello World app using Appyx.</p>
+<p>If you&#39;re comfortable with Appyx go ahead and clone the <a href="https://github.com/bumble-tech/appyx-starter-kit" target="_blank">starter-kit</a> and start building awesome apps.</p>
+<h2 is-upgraded>What you&#39;ll do</h2>
+<ol type="1">
+<li>Install Appyx into your project</li>
+<li>Create a root node</li>
+<li>Plug the root node into your activity</li>
+<li>Say hello</li>
+</ol>
+<h2 is-upgraded>What you&#39;ll build</h2>
+<p class="image-container"><img alt="demo" style="width: 200.00px" src="img/9bb25a49df6ce7cf.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Getting started" duration="1">
+        <h2 is-upgraded>A sneak peek</h2>
+<p>Appyx is really powerful, complex navigation is something it can be handled with ease. Here&#39;s a sneak peak of what this power looks like:</p>
+<p class="image-container"><img alt="teaser" style="width: 200.00px" src="img/8fe9029f4f09c9bd.gif"></p>
+<p>Keep up with our codelabs and you&#39;ll be adding more animations in no time, instead of your usual slide and fade.</p>
+<h2 is-upgraded>Access the code</h2>
+<p>Clone the repo and open the HelloAppyx project.</p>
+<pre><code>git clone git@github.com:bumble-tech/appyx-codelabs.git
+
+</code></pre>
+<p>This tutorial and the <code>TODOs</code> will help you build your first Appyx project.</p>
+<p>If at any point you&#39;re feeling stuck, check out the solution inside the project.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Adding Appyx to your project" duration="3">
+        <p>Next let&#39;s add Appyx core and other dependencies to our project:</p>
+<pre><code>implementation &#34;com.bumble.appyx:core:{latest_version}&#34;
+
+</code></pre>
+<p><strong><em>Note:</em></strong> We&#39;ll need to update the app theme</p>
+<p>Open up <code>themes.xml</code>. It should look similar to this:</p>
+<pre><code>&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;
+&lt;resources&gt;
+
+    &lt;style name=&#34;Theme.HelloAppyx&#34; parent=&#34;android:Theme.Material.Light.NoActionBar&#34;&gt;
+        &lt;item name=&#34;android:statusBarColor&#34;&gt;@color/purple_700&lt;/item&gt;
+    &lt;/style&gt;
+&lt;/resources&gt;
+
+</code></pre>
+<p>Update the <code>parent</code> to <code>Theme.AppCompat.Light.NoActionBar</code>. The result should be similar to this:</p>
+<pre><code>&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;
+&lt;resources&gt;
+
+    &lt;style name=&#34;Theme.HelloAppyx&#34; parent=&#34;Theme.AppCompat.Light.NoActionBar&#34;&gt;
+        &lt;item name=&#34;android:statusBarColor&#34;&gt;@color/purple_700&lt;/item&gt;
+    &lt;/style&gt;
+&lt;/resources&gt;
+</code></pre>
+<p>For the purpose of this tutorial we&#39;re using version <code>1.0-alpha09</code>. Check our <a href="https://bumble-tech.github.io/appyx/" target="_blank">official page</a> for newer releases</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create a RootNode" duration="1">
+        <p>In this step we&#39;ll create our <code>RootNode</code>. This will be a subclass of the <code>Node</code> class. Nodes are the building blocks of the tree that Appyx creates for you.</p>
+<ol type="1">
+<li>Open the <code>RootNode.kt</code> file.</li>
+<li>Change it so it inherits <code>Node</code>.</li>
+<li>Add <code>buildContext: BuildContext</code> on the constructor and pass it to the <code>Node</code>.</li>
+</ol>
+<pre><code>class RootNode(buildContext: BuildContext) : Node(buildContext = buildContext) {
+    ...
+}
+
+</code></pre>
+<p>We&#39;ll override the <code>@Composable</code> function <code>View</code> and say hello.</p>
+<pre><code>@Composable
+override fun View(modifier: Modifier) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colors.background),
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = &#34;Appyx Logo&#34;
+        )
+        Greeting(&#34;Hello Appyx&#34;)
+    }
+
+}
+
+</code></pre>
+<p>and the <code>Greeting</code>:</p>
+<pre><code>@Composable
+fun Greeting(message: String) {
+    Text(
+        text = message,
+        style = MaterialTheme.typography.h3.copy(color = MaterialTheme.colors.onBackground)
+    )
+}
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Host your RootNode" duration="1">
+        <p>In this step we&#39;ll host our newly created <code>RootNode</code> inside the <code>MainActivity</code>.</p>
+<p>To use the <code>NodeHost</code> inside your activity you&#39;ll need to inherit from <code>NodeActivity</code>.</p>
+<pre><code>class MainActivity : NodeActivity() {
+    ...
+}
+</code></pre>
+<p>This is our starting point.</p>
+<pre><code>setContent {
+    HelloAppyxTheme {
+        NodeHost(integrationPoint = integrationPoint) {
+            RootNode(it)
+        }
+    }
+}
+</code></pre>
+<p>And we&#39;re done.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Launch" duration="1">
+        <p>Launch your app. It will look like this:</p>
+<p class="image-container"><img alt="demo" style="width: 200.00px" src="img/9bb25a49df6ce7cf.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Where to go from here" duration="0">
+        <p>Check out other code labs to learn more about Appyx.</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
