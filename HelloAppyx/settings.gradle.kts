@@ -13,5 +13,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "HelloAppyx"
-include ':app'
-include ':solution'
+include(
+    ":app",
+    ":solution"
+)
