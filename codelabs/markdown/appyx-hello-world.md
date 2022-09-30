@@ -65,7 +65,7 @@ Next let's add Appyx core and other dependencies to our project:
 
 ```
 
-implementation "com.bumble.appyx:core:{latest_version}"
+implementation(libs.appyx.core)
 
 ```
 
