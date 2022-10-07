@@ -52,8 +52,9 @@ class RootNode(
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
+                    .fillMaxSize()
                     .weight(0.9f)
-                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
                 Children(
                     navModel = backStack,

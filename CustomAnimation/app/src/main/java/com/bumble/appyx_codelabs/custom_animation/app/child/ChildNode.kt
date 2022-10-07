@@ -2,6 +2,8 @@ package com.bumble.appyx_codelabs.custom_animation.app.child
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -27,12 +29,13 @@ class ChildNode(
         Box(
             contentAlignment = Alignment.Center,
             modifier = modifier
-                .size(200.dp)
+                .fillMaxSize()
                 .clip(RoundedCornerShape(10.dp))
                 .background(color = colors[startValue % colors.size])
         ) {
             Text(text = startValue.toString())
         }
+
     }
 
     companion object {
