@@ -8,8 +8,10 @@ authors: Vlad
 # Hello World with Appyx
 
 <!-- ------------------------ -->
-## Before you begin
-Duration: 1s
+## Getting started
+Duration: 1
+
+### Before you begin
 
 [Appyx](https://bumble-tech.github.io/appyx/) is a model-driven-navigation library for Jetpack Compose.
 
@@ -27,10 +29,6 @@ If you're comfortable with Appyx go ahead and clone the [starter-kit](https://gi
 ### What you'll build
 
 <img src="assets/hello_appyx_1.png" alt="demo" width="200"/>
-
-<!-- ------------------------ -->
-## Getting started
-Duration: 1
 
 ### Access the code
 
@@ -62,9 +60,15 @@ The project contains two modules:<br/>
 
 Next let's add Appyx core and other dependencies to our project:
 
+If you're using `build.gradle.kts`
+```
+implementation("com.bumble.appyx:core:<version>")
+
 ```
 
-implementation(libs.appyx.core)
+for `build.gradle` use:
+```
+implementation "com.bumble.appyx:core:<version>"
 
 ```
 
@@ -156,3 +160,12 @@ Launch your app. It will look like this:
 Duration: 0
 
 Check out other code labs to learn more about Appyx.
+
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+</style>

@@ -45,7 +45,7 @@ android {
 dependencies {
 
     // Appyx
-    implementation(libs.appyx.core)
+    implementation("com.bumble.appyx:core:1.0-alpha09")
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle)
