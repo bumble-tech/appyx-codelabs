@@ -13,5 +13,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "CustomAnimation"
-include ':app'
-include ':solution'
+include(
+        ":app",
+        ":solution"
+)
