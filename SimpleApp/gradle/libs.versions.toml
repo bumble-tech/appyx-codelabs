@@ -1,0 +1,31 @@
+# keep sorted please, use Edit -> Sort Lines
+
+[versions]
+appyx = "1.0-alpha09"
+androidCompileSdk = "32"
+androidMinSdk = "21"
+androidTargetSdk = "32"
+composeUi = "1.2.1"
+composeCompiler = "1.3.1"
+
+[libraries]
+androidx-core = "androidx.core:core-ktx:1.7.0"
+androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
+androidx-activity-compose = "androidx.activity:activity-compose:1.3.1"
+androidx-material = "androidx.compose.material:material:1.1.1"
+junit = "junit:junit:4.13.2"
+androidx-test-ext-junit = "androidx.test.ext:junit:1.1.3"
+androidx-test-espresso = "androidx.test.espresso:espresso-core:3.4.0"
+
+appyx-core = { module = "com.bumble.appyx:core", version.ref = "appyx" }
+appyx-testing-ui = { module = "com.bumble.appyx:testing-ui", version.ref = "appyx" }
+appyx-testing-ui-common = { module = "com.bumble.appyx:testing-unit-common", version.ref = "appyx" }
+appyx-testing-junit4 = { module = "com.bumble.appyx:testing-junit4", version.ref = "appyx" }
+appyx-testing-junit5 = { module = "com.bumble.appyx:testing-junit5", version.ref = "appyx" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeUi" }
+androidx-compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeUi" }
+androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "composeUi" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeUi" }
+androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "composeUi" }
+[plugins]
+
