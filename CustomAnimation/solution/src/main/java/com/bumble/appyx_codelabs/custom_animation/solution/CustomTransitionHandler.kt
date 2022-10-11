@@ -15,13 +15,17 @@ import com.bumble.appyx.core.navigation.transition.ModifierTransitionHandler
 import com.bumble.appyx.core.navigation.transition.TransitionDescriptor
 import com.bumble.appyx.core.navigation.transition.TransitionSpec
 import com.bumble.appyx.navmodel.backstack.BackStack
-import com.bumble.appyx.navmodel.backstack.operation.BackStackOperation
-import com.bumble.appyx.navmodel.backstack.operation.Pop
 import kotlin.math.roundToInt
 
 class CustomTransitionHandler<NavTarget>(
     private val transitionSpec: TransitionSpec<BackStack.State, Offset>
 ) : ModifierTransitionHandler<NavTarget, BackStack.State>() {
+
+    private data class Props(
+        val scale: Float,
+        val offset: Offset,
+        val alpha: Float
+    )
 
     override fun createModifier(
         modifier: Modifier,
@@ -31,22 +35,19 @@ class CustomTransitionHandler<NavTarget>(
 
         val scale by transition.animateFloat(
             transitionSpec = { tween(1000) },
-            targetValueByState = { it.targetScale(descriptor) },
+            targetValueByState = { it.targetProps(descriptor).scale },
             label = ""
         )
 
         val offset by transition.animateOffset(
             transitionSpec = transitionSpec,
-            targetValueByState = {
-                val height = descriptor.params.bounds.height.value
-                it.targetOffset(height)
-            },
+            targetValueByState = { it.targetProps(descriptor).offset },
             label = ""
         )
 
         val alpha by transition.animateFloat(
             transitionSpec = { tween(1000) },
-            targetValueByState = { it.targetAlpha() },
+            targetValueByState = { it.targetProps(descriptor).alpha },
             label = ""
         )
 
@@ -63,34 +64,32 @@ class CustomTransitionHandler<NavTarget>(
 
     private fun fromBottom(height: Float) = Offset(0f, 2f * height)
 
-    private fun BackStack.State.targetScale(descriptor: TransitionDescriptor<NavTarget, BackStack.State>): Float =
+    private fun BackStack.State.targetProps(
+        descriptor: TransitionDescriptor<NavTarget, BackStack.State>,
+    ): Props =
         when (this) {
-            BackStack.State.CREATED -> 0.4f
-            BackStack.State.STASHED -> 0.6f
-            BackStack.State.ACTIVE -> 1f
+            BackStack.State.CREATED -> Props(
+                alpha = 1f,
+                scale = 0.4f,
+                offset = fromBottom(descriptor.params.bounds.height.value)
+            )
+            BackStack.State.ACTIVE -> Props(
+                alpha = 1f,
+                scale = 1f,
+                offset = Offset.Zero
+            )
+            BackStack.State.STASHED -> Props(
+                alpha = 0f,
+                scale = 0.6f,
+                offset = Offset.Zero
+            )
             BackStack.State.DESTROYED -> {
-                val operation = descriptor.operation as? BackStackOperation
-                if (operation is Pop) {
-                    1.25f
-                } else {
-                    1f
-                }
+                Props(
+                    alpha = 0f,
+                    scale = 1.25f,
+                    offset = Offset.Zero
+                )
             }
-        }
-
-    private fun BackStack.State.targetOffset(height: Float): Offset =
-        when (this) {
-            BackStack.State.CREATED -> fromBottom(height)
-            BackStack.State.ACTIVE,
-            BackStack.State.STASHED,
-            BackStack.State.DESTROYED -> Offset.Zero
-        }
-
-    private fun BackStack.State.targetAlpha(): Float =
-        when (this) {
-            BackStack.State.CREATED,
-            BackStack.State.ACTIVE -> 1f
-            else -> 0f
         }
 }
 

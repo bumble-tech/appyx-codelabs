@@ -16,8 +16,8 @@ import com.bumble.appyx.navmodel.backstack.operation.pop
 import com.bumble.appyx.navmodel.backstack.operation.push
 import com.bumble.appyx.navmodel.backstack.transitionhandler.rememberBackstackSlider
 import com.bumble.appyx_codelabs.custom_animation.app.child.ChildNode
-import com.bumble.appyx_codelabs.custom_animation.app.root.RootNode.*
-import com.bumble.appyx_codelabs.custom_animation.app.root.RootNode.NavTarget.*
+import com.bumble.appyx_codelabs.custom_animation.app.root.RootNode.NavTarget
+import com.bumble.appyx_codelabs.custom_animation.app.root.RootNode.NavTarget.Child
 import com.bumble.appyx_codelabs.custom_animation.app.ui.theme.appyx_dark
 import com.bumble.appyx_codelabs.custom_animation.app.ui.theme.appyx_yellow1
 
@@ -47,21 +47,30 @@ class RootNode(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            Children(
-                navModel = backStack,
-                transitionHandler = rememberBackstackSlider(),
-                modifier = Modifier.weight(9f)
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(0.9f)
+                    .padding(16.dp)
             ) {
-                children<NavTarget> { child ->
-                    child()
+                Children(
+                    navModel = backStack,
+                    // TODO: (7) use the CustomTransitionHandler
+                    // rememberCustomTransitionHandler()
+                    transitionHandler = rememberBackstackSlider(),
+                ) {
+                    children<NavTarget> { child ->
+                        child()
+                    }
                 }
             }
 
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier
-                    .weight(1f)
                     .fillMaxWidth()
+                    .weight(0.1f)
                     .padding(bottom = 16.dp)
             ) {
                 CustomButton(
