@@ -21,35 +21,14 @@ import com.bumble.appyx_codelabs.simple_app.app.R
 class RootNode(
     buildContext: BuildContext,
     // TODO: (4.1) Add the back stack
-//    private val backStack: BackStack<NavTarget> = BackStack(
-//        initialElement = Child1,
-//        savedStateMap = buildContext.savedStateMap
-//    ),
 ) : Node(buildContext) {
     // TODO: (2) Change RootNode to inherit from ParentNode, we'll provide the navModel later
-    // : ParentNode<RootNode.NavTarget>(
-    // navModel = TODO(),
-    // buildContext = buildContext
-    // )
 
     // TODO: (1) Model our destinations using a sealed class that inherits NavTarget
-//    sealed class NavTarget {
-//        object Child1 : NavTarget()
-//        object Child2 : NavTarget()
-//    }
+
     // TODO: (3) Implement the resolve function and add simple children
-//    override fun resolve(navTarget: NavTarget, buildContext: BuildContext) =
-//        when (navTarget) {
-//            is Child1 -> node(buildContext) { Text(text = "Placeholder for child 1") }
-//            is Child2 -> node(buildContext) { Text(text = "Placeholder for child 2") }
-//        }
 
     // TODO: (6.3) Use the newly created child nodes, we'll manage navigation in the final step
-//    override fun resolve(navTarget: NavTarget, buildContext: BuildContext) =
-//        when (navTarget) {
-//            is Child1 -> Child1Node(buildContext) { TODO() }
-//            is Child2 -> Child2Node(buildContext)
-//        }
 
     // TODO: (7) Push Child2Node when pressing the button
 
@@ -73,14 +52,7 @@ class RootNode(
                 color = MaterialTheme.colors.onBackground
             )
             // TODO: (4.2) Add the Children and pass the backstack
-//            Children(
-//                navModel = backStack,
-//                modifier = Modifier.fillMaxSize()
-//            ) {
-//                children<NavTarget> { child ->
-//                    child()
-//                }
-//            }
+
             // TODO: (5) Add fade in/out transitions
         }
     }
