@@ -17,18 +17,20 @@ Duration: 1
 
 This tutorial will walk you through creating a Hello World app using Appyx.
 
-If you're comfortable with Appyx go ahead and clone the [starter-kit](https://github.com/bumble-tech/appyx-starter-kit) and start building awesome apps.
+If you're already familiar with Appyx, you can skip this codelab entirely – just clone the [starter-kit](https://github.com/bumble-tech/appyx-starter-kit) and start building awesome apps!
+
 
 ### What you'll do
 
-1. Install Appyx into your project
-2. Create a root node
-3. Plug the root node into your activity
-4. Say hello
+1. Setup Appyx in your project
+2. Create a root Node with a hello world view
+3. Connect this root Node into your Activity
+
 
 ### What you'll build
 
 <img src="assets/hello_appyx_1.png" alt="demo" width="200"/>
+
 
 ### Access the code
 
@@ -39,9 +41,12 @@ git clone git@github.com:bumble-tech/appyx-codelabs.git
 
 ```
 
+
+### How the codelab is structured
+
 This tutorial and the `TODOs` will help you build your first Appyx project.
 
-If at any point you're feeling stuck, check out the solution inside the project.
+If at any point you're feeling stuck, you can always check out the solution inside the project.
 
 <aside>The <strong>appyx-codelabs</strong> repo contains starter code for all codelabs in the pathway.<br/>
 For this codelab, use the <strong>HelloAppyx</strong> project.
@@ -56,43 +61,51 @@ The project contains two modules:<br/>
 </ul>
 </aside>
 
-### Adding Appyx to your project
 
-Next let's add Appyx core and other dependencies to our project:
+### Add Appyx to your project
 
-If you're using `build.gradle.kts`
+You can refer to our [Changelog](https://bumble-tech.github.io/appyx/releases/changelog/) for the latest release version.
+
+If you're using `build.gradle.kts`:
 ```
-implementation("com.bumble.appyx:core:<version>")
-
-```
-
-for `build.gradle` use:
-```
-implementation "com.bumble.appyx:core:<version>"
+implementation("com.bumble.appyx:core:{version}")
 
 ```
 
-Check our [official page](https://bumble-tech.github.io/appyx/) for the latest release.
+For `build.gradle` you can use:
+```
+implementation "com.bumble.appyx:core:{version}"
+
+```
+
 
 <!-- ------------------------ -->
 ## Create a RootNode
 Duration: 1
 
-In this step we'll create our `RootNode`. This will be a subclass of the `Node` class.
-Nodes are the building blocks of the tree that Appyx creates for you.
+Nodes are the fundamental building blocks in Appyx. 
+
+We'll learn more about them in subsequent codelabs, now we'll only leverage that they have `@Composable` views.    
+
+Let's implement our `RootNode`:
+
 
 1. Open the `RootNode.kt` file. 
-2. Change it so it inherits `Node`.
+2. Change it so that it inherits from `Node`.
 3. Add `buildContext: BuildContext` on the constructor and pass it to the `Node`.
 
 ```
-class RootNode(buildContext: BuildContext) : Node(buildContext = buildContext) {
+class RootNode(
+    buildContext: BuildContext
+) : Node(
+    buildContext = buildContext
+) {
     ...
 }
 
 ```
 
-We'll override the `@Composable` function `View` and say hello.
+We'll override the `@Composable` function `View` to say hello:
 
 ```
 @Composable
@@ -123,7 +136,7 @@ override fun View(modifier: Modifier) {
 ## Host your RootNode
 Duration: 1
 
-In this step we'll host our newly created `RootNode` inside the `MainActivity`.
+Let's now host our newly created `RootNode` inside the `MainActivity`.
 
 To use the `NodeHost` inside your activity you'll need to inherit from `NodeActivity`.
 
@@ -133,33 +146,41 @@ class MainActivity : NodeActivity() {
 }
 ```
 
-This is our starting point.
+Let's change the `onCreate` method to host our `RootNode`:
 
 ```
-setContent {
-    HelloAppyxTheme {
-        NodeHost(integrationPoint = integrationPoint) {
-            RootNode(it)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            HelloAppyxTheme {
+                NodeHost(integrationPoint = integrationPoint) {
+                    RootNode(it)
+                }
+            }
         }
     }
-}
 ```
 
 And we're done.
+
 
 <!-- ------------------------ -->
 ## Launch
 Duration: 1
 
-Launch your app. It will look like this:
+Launch your app! It should look like this:
 
 <img src="assets/hello_appyx_1.png" alt="demo" width="200"/>
+
 
 <!-- ------------------------ -->
 ## Where to go from here
 Duration: 0
 
-Check out other code labs to learn more about Appyx.
+Check out other code labs to start using the more advanced features of Appyx!
+
+For more information on Nodes you can check out the [Structuring your app navigation](https://bumble-tech.github.io/appyx/apps/structure/) section on the project page.
+
 
 <style>
 table {

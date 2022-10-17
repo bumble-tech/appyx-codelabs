@@ -19,7 +19,11 @@ import com.bumble.appyx.core.integrationpoint.IntegrationPointStub
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 
-class RootNode(buildContext: BuildContext) : Node(buildContext = buildContext) {
+class RootNode(
+    buildContext: BuildContext
+) : Node(
+    buildContext = buildContext
+) {
 
     @Composable
     override fun View(modifier: Modifier) {
