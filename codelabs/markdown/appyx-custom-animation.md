@@ -54,6 +54,7 @@ The project contains two modules:<br/>
 
 Check our [official page](https://bumble-tech.github.io/appyx/) for the latest release.
 
+
 <!-- ------------------------ -->
 ## Describe state transitions
 Duration: 1
@@ -69,6 +70,7 @@ This defines 4 states for a child:
 The diagram below illustrates the transitions from one state to the next:
 
 <img src="assets/backstack_states.png" alt="backstack states" width="400"/>
+
 
 <!-- ------------------------ -->
 ## Associate states with UI properties
@@ -89,6 +91,7 @@ private data class Props(
 ```
 
 Next, let’s define some actual values representing our key states.
+
 
 <!-- ------------------------ -->
 ## Fade to the next item
@@ -212,6 +215,7 @@ override fun createModifier(
 
 ```
 
+
 <!-- ------------------------ -->
 ## Make it explosive
 
@@ -261,6 +265,7 @@ override fun createModifier(
 
 That's it!
 
+
 <!-- ------------------------ -->
 ## Launch
 Duration: 1
@@ -268,6 +273,7 @@ Duration: 1
 Launch your app. It will look like this:
 
 <img src="assets/custom-animation-demo.gif" alt="demo" width="200"/>
+
 
 <!-- ------------------------ -->
 ## Where to go from here
