@@ -18,10 +18,9 @@ We're going to extend that and add navigation.
 
 ### What you'll do
 
-1. Understand how Appyx's `NavModel` represents transition states.
-2. Define values for each possible state.
-3. Animate between the states.
-4. Use a custom transition handler to animate between your screens.
+1. Model the animation with states
+2. Associate the states with UI properties
+3. Use a custom transition handler.
 
 ### What you'll build
 
@@ -56,100 +55,74 @@ The project contains two modules:<br/>
 Check our [official page](https://bumble-tech.github.io/appyx/) for the latest release.
 
 <!-- ------------------------ -->
-## Transition states
+## Describe state transitions
 Duration: 1
 
 In this example we're using a `BackStack`.
 This defines 4 states for a child:
 
-- `CREATED` - when the child is pushed to the `BackStack`
-- `ACTIVE` - when the child is the currently visible element
-- `STASHED` - when the child stored in the `BackStack` as a new child is being pushed
-- `DESTROYED` - when a child is removed from the `BackStack`
+- `CREATED`
+- `ACTIVE`
+- `STASHED`
+- `DESTROYED`
 
-State transition is defined like this: </br>
-`CREATED` -> `ACTIVE` </br>
-`ACTIVE` -> `STASHED` </br>
-`ACTIVE` -> `DESTROYED` </br>
-`STASHED` -> `ACTIVE` </br>
+The diagram below illustrates the transitions from one state to the next:
+
+<img src="assets/backstack_states.png" alt="backstack states" width="400"/>
 
 <!-- ------------------------ -->
-## Define animation properties
-Duration: 1
+## Associate states with UI properties
 
-Let's get coding.
+With Appyx, we can use any UI property for transition animations that we can represent with a Compose `Modifier`.
 
-Open up `CustomTransitionHandler`. 
-We'll first create a nested class called `Props` that holds the values for each state.
+That’s a lot of power! And the best part is that it’s very easy to do so. Let’s begin by defining the properties we’ll want to animate. This is purely our choice:
 
-The properties we'll be animating in this codelab are:
-- scale
-- offset
-- alpha
-
-Add the following class inside `CustomTransitionHandler`:
+Add the following inside `CustomTransitionHandler`
 
 ```
 private data class Props(
-    val scale: Float,
-    val offset: Offset,
-    val alpha: Float
+    val scale: Float = 1f,
+    val offset: Offset = Offset.Zero,
+    val alpha: Float = 1f
 )
 
 ```
 
-The `Props` defines the starting values for each state.
-We'll then animate to the next state.
+Next, let’s define some actual values representing our key states.
 
-Our animation will go like this:
+<!-- ------------------------ -->
+## Fade to the next item
 
-- When a child is `CREATED` it will be scaled down and out of the screen as we want to scale it up and slide it in from the bottom.
-- When a child is `ACTIVE` it will be in the middle of the screen at it's full width and height.
-- When a child is `STASHED` it will be scaled down and faded out until it's invisible.
-- When a child is `DESTROYED` it will be scaled up and faded out. This will create a nice exploding effect.
+The first thing we'll do is crossfade between states.
 
-Next we'll define a function that gives us the properties for each state:
+Start off with this:
+
+```
+private val created = Props()
+private val active = created.copy(alpha = 1f)
+private val stashed = active.copy(alpha = 0f)
+private val destroyed = active.copy(alpha = 0f)
+
+```
+
+Here we're saying that when an element is `CREATED` or `ACTIVE` it should be visible, invisible when it's `DESTROYED` and partially visible when it's `STASHED`.
+
+Define the mappings between the current state and the UI properties:
 
 ```
 private fun BackStack.State.targetProps(
-    descriptor: TransitionDescriptor<NavTarget, BackStack.State>,
+        descriptor: TransitionDescriptor<NavTarget, BackStack.State>,
 ): Props =
-    when (this) {
-        BackStack.State.CREATED -> Props(
-            alpha = 1f,
-            scale = 0.4f,
-            offset = fromBottom(descriptor.params.bounds.height.value)
-        )
-        BackStack.State.ACTIVE -> Props(
-            alpha = 1f,
-            scale = 1f,
-            offset = Offset.Zero
-        )
-        BackStack.State.STASHED -> Props(
-            alpha = 0f,
-            scale = 0.6f,
-            offset = Offset.Zero
-        )
-        BackStack.State.DESTROYED -> {
-            Props(
-                alpha = 0f,
-                scale = 1.25f,
-                offset = Offset.Zero
-            )
-        }
+    when(this) {
+        BackStack.State.CREATED -> created
+        BackStack.State.ACTIVE -> active
+        BackStack.State.STASHED -> stashed
+        BackStack.State.DESTROYED -> destroyed
     }
-
-private fun fromBottom(height: Float) = Offset(0f, 2f * height)
 
 ```
 
-<!-- ------------------------ -->
-## Animate the properties
-Duration: 1
-
-Next we'll animate the properties using Compose's API.
-
-We'll perform the animations inside the `createModifier` function.
+Add this to our `Modifier`.
 
 ```
 override fun createModifier(
@@ -158,11 +131,68 @@ override fun createModifier(
     descriptor: TransitionDescriptor<NavTarget, BackStack.State>
 ): Modifier = modifier.composed {
 
-    val scale by transition.animateFloat(
-        transitionSpec = { tween(1000) },
-        targetValueByState = { it.targetProps(descriptor).scale },
+    val alpha by transition.animateFloat(
+        transitionSpec = { tween(2000) },
+        targetValueByState = { it.targetProps(descriptor).alpha },
         label = ""
     )
+
+    this
+        .alpha(alpha)
+}
+
+```
+
+<aside>
+To use the newly updated <strong>TransitionHandler</strong> open up your <strong>RootNode</strong> and replace:</br>
+
+<strong>rememberBackstackSlider()</strong> </br>
+with </br>
+<strong>remeberCustomTransitionHandler()</strong> </br>
+</aside>
+
+
+<!-- ------------------------ -->
+## Slide in from the bottom
+
+This was neat and simple, but let's kick it up a notch.
+
+When we're creating a new item let's push it in from the bottom of the screen.
+
+Change your `targetProps` function:
+
+```
+private fun BackStack.State.targetProps(
+    descriptor: TransitionDescriptor<NavTarget, BackStack.State>,
+): Props =
+    when (this) {
+        BackStack.State.CREATED -> created.copy(
+            offset = fromBottom(descriptor.params.bounds.height.value)
+        )
+        BackStack.State.ACTIVE -> active
+        BackStack.State.STASHED -> stashed
+        BackStack.State.DESTROYED -> destroyed
+    }
+
+```
+
+Here's the `fromBottom` function:
+
+```
+private fun fromBottom(height: Float) = Offset(0f, 2f * height)
+
+```
+
+Add this to your `Modifier`.
+
+```
+override fun createModifier(
+    modifier: Modifier,
+    transition: Transition<BackStack.State>,
+    descriptor: TransitionDescriptor<NavTarget, BackStack.State>
+): Modifier = modifier.composed {
+
+    ...
 
     val offset by transition.animateOffset(
         transitionSpec = transitionSpec,
@@ -170,9 +200,49 @@ override fun createModifier(
         label = ""
     )
 
-    val alpha by transition.animateFloat(
+    this
+        .offset {
+            IntOffset(
+                x = (offset.x * density).roundToInt(),
+                y = (offset.y * density).roundToInt()
+            )
+        }
+        .alpha(alpha)
+}
+
+```
+
+<!-- ------------------------ -->
+## Make it explosive
+
+For our final trick, let's make our screen explode when it's destroyed.
+
+To do this, when it transitions to `DESTROYED` we'll scale it up.
+
+Change the properties like this:
+
+```
+private val created = Props(alpha = 0.5f)
+private val active = created.copy(alpha = 1f, scale = 1f)
+private val stashed = active.copy(alpha = 0.5f, scale = 0.6f)
+private val destroyed = active.copy(alpha = 0f, scale = 1.25f)
+
+```
+
+Add this to your `Modifier`.
+
+```
+override fun createModifier(
+    modifier: Modifier,
+    transition: Transition<BackStack.State>,
+    descriptor: TransitionDescriptor<NavTarget, BackStack.State>
+): Modifier = modifier.composed {
+
+    ...
+
+    val scale by transition.animateFloat(
         transitionSpec = { tween(1000) },
-        targetValueByState = { it.targetProps(descriptor).alpha },
+        targetValueByState = { it.targetProps(descriptor).scale },
         label = ""
     )
 
@@ -189,21 +259,7 @@ override fun createModifier(
 
 ```
 
-These transitions will happen from the current state to the value obtained from `targetValueByState`.
-
-<!-- ------------------------ -->
-## Put it together
-Duration: 1
-
-Now that we've put together all the animations, it's time to plug it in to our `NavModel`.
-
-Open up your `RootNode` and replace:
-
-`rememberBackstackSlider()` </br>
-with </br>
-`remeberCustomTransitionHandler()` </br>
-
-That's it.
+That's it!
 
 <!-- ------------------------ -->
 ## Launch

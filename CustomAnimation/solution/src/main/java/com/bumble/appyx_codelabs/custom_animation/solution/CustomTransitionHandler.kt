@@ -22,10 +22,15 @@ class CustomTransitionHandler<NavTarget>(
 ) : ModifierTransitionHandler<NavTarget, BackStack.State>() {
 
     private data class Props(
-        val scale: Float,
-        val offset: Offset,
-        val alpha: Float
+        val scale: Float = 1f,
+        val offset: Offset = Offset.Zero,
+        val alpha: Float = 1f
     )
+
+    private val created = Props()
+    private val active = created.copy(alpha = 1f, scale = 1f)
+    private val stashed = active.copy(alpha = 0.5f, scale = 0.6f)
+    private val destroyed = active.copy(alpha = 0f, scale = 1.25f)
 
     override fun createModifier(
         modifier: Modifier,
@@ -33,9 +38,9 @@ class CustomTransitionHandler<NavTarget>(
         descriptor: TransitionDescriptor<NavTarget, BackStack.State>
     ): Modifier = modifier.composed {
 
-        val scale by transition.animateFloat(
-            transitionSpec = { tween(1000) },
-            targetValueByState = { it.targetProps(descriptor).scale },
+        val alpha by transition.animateFloat(
+            transitionSpec = { tween(2000) },
+            targetValueByState = { it.targetProps(descriptor).alpha },
             label = ""
         )
 
@@ -45,9 +50,9 @@ class CustomTransitionHandler<NavTarget>(
             label = ""
         )
 
-        val alpha by transition.animateFloat(
+        val scale by transition.animateFloat(
             transitionSpec = { tween(1000) },
-            targetValueByState = { it.targetProps(descriptor).alpha },
+            targetValueByState = { it.targetProps(descriptor).scale },
             label = ""
         )
 
@@ -68,28 +73,12 @@ class CustomTransitionHandler<NavTarget>(
         descriptor: TransitionDescriptor<NavTarget, BackStack.State>,
     ): Props =
         when (this) {
-            BackStack.State.CREATED -> Props(
-                alpha = 1f,
-                scale = 0.4f,
+            BackStack.State.CREATED -> created.copy(
                 offset = fromBottom(descriptor.params.bounds.height.value)
             )
-            BackStack.State.ACTIVE -> Props(
-                alpha = 1f,
-                scale = 1f,
-                offset = Offset.Zero
-            )
-            BackStack.State.STASHED -> Props(
-                alpha = 0f,
-                scale = 0.6f,
-                offset = Offset.Zero
-            )
-            BackStack.State.DESTROYED -> {
-                Props(
-                    alpha = 0f,
-                    scale = 1.25f,
-                    offset = Offset.Zero
-                )
-            }
+            BackStack.State.ACTIVE -> active
+            BackStack.State.STASHED -> stashed
+            BackStack.State.DESTROYED -> destroyed
         }
 }
 
@@ -100,4 +89,3 @@ fun <R> rememberCustomTransitionHandler(
     remember {
         CustomTransitionHandler(transitionSpec = transitionSpec)
     }
-

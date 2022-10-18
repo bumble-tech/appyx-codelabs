@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.bumble.appyx.core.integration.NodeHost
 import com.bumble.appyx.core.integrationpoint.NodeActivity
-import com.bumble.appyx_codelabs.custom_animation.app.ui.theme.CustomAnimationTheme
 import com.bumble.appyx_codelabs.custom_animation.app.root.RootNode
+import com.bumble.appyx_codelabs.custom_animation.app.ui.theme.CustomAnimationTheme
 
 
 class MainActivity : NodeActivity() {

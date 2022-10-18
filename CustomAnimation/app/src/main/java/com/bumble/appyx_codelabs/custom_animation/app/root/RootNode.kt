@@ -56,7 +56,7 @@ class RootNode(
             ) {
                 Children(
                     navModel = backStack,
-                    // TODO: (7) use the CustomTransitionHandler
+                    // TODO: (5) use the CustomTransitionHandler
                     // rememberCustomTransitionHandler()
                     transitionHandler = rememberBackstackSlider(),
                 ) {
