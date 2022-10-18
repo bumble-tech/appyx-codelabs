@@ -1,7 +1,8 @@
 package com.bumble.appyx_codelabs.custom_animation.solution.child
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -11,7 +12,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
-import com.bumble.appyx_codelabs.custom_animation.solution.ui.theme.*
+import com.bumble.appyx_codelabs.custom_animation.solution.ui.theme.atomic_tangerine
+import com.bumble.appyx_codelabs.custom_animation.solution.ui.theme.manatee
+import com.bumble.appyx_codelabs.custom_animation.solution.ui.theme.sizzling_red
 
 
 class ChildNode(
