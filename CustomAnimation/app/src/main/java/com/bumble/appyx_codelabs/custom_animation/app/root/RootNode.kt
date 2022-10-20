@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -27,8 +27,6 @@ class RootNode(
     private val backStack: BackStack<NavTarget> = BackStack(Child(0), null),
 ) : ParentNode<NavTarget>(navModel = backStack, buildContext) {
 
-    private var totalNodes = 1
-
     sealed class NavTarget {
         data class Child(val startValue: Int) : NavTarget()
     }
@@ -43,6 +41,8 @@ class RootNode(
 
     @Composable
     override fun View(modifier: Modifier) {
+        var counter by remember { mutableStateOf(1) }
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
@@ -74,18 +74,12 @@ class RootNode(
                     .padding(bottom = 16.dp)
             ) {
                 CustomButton(
-                    onClick = {
-                        totalNodes--
-                        backStack.pop()
-                    }
+                    onClick = { backStack.pop() }
                 ) {
                     Text("Pop")
                 }
                 CustomButton(
-                    onClick = {
-                        totalNodes++
-                        backStack.push(Child(startValue = totalNodes - 1))
-                    }
+                    onClick = { backStack.push(Child(startValue = counter++)) }
                 ) {
                     Text("Push")
                 }
