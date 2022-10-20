@@ -13,8 +13,8 @@ Duration: 1
 
 ### Before you begin
 
-In the previous [codelab](www.previouscodelab.bumble) we've built a simple app using `Appyx`.
-We're going to extend that and add navigation.
+In the previous [codelab](www.previouscodelab.bumble) we've seen how to navigate using `Appyx`.
+We're going to see the power of `Appyx's` transition handlers.
 
 ### What you'll do
 
@@ -37,7 +37,7 @@ git clone git@github.com:bumble-tech/appyx-codelabs.git
 
 This tutorial and the `TODOs` will help you add great transitions between screens.
 
-If at any point you're feeling stuck, check out the solution inside the project.
+If at any point you're feeling stuck, you can always check out the solution inside the project.
 
 <aside>The <strong>appyx-codelabs</strong> repo contains starter code for all codelabs in the pathway.<br/>
 For this codelab, use the <strong>CustomAnimation</strong> project.
@@ -113,9 +113,7 @@ Here we're saying that when an element is `CREATED` or `ACTIVE` it should be vis
 Define the mappings between the current state and the UI properties:
 
 ```
-private fun BackStack.State.targetProps(
-        descriptor: TransitionDescriptor<NavTarget, BackStack.State>,
-): Props =
+private fun BackStack.State.targetProps(): Props =
     when(this) {
         BackStack.State.CREATED -> created
         BackStack.State.ACTIVE -> active
@@ -135,8 +133,8 @@ override fun createModifier(
 ): Modifier = modifier.composed {
 
     val alpha by transition.animateFloat(
-        transitionSpec = { tween(2000) },
-        targetValueByState = { it.targetProps(descriptor).alpha },
+        transitionSpec = floatSpec,
+        targetValueByState = { it.targetProps().alpha },
         label = ""
     )
 
@@ -165,24 +163,13 @@ When we're creating a new item let's push it in from the bottom of the screen.
 Change your `targetProps` function:
 
 ```
-private fun BackStack.State.targetProps(
-    descriptor: TransitionDescriptor<NavTarget, BackStack.State>,
-): Props =
+private fun BackStack.State.targetProps(height: Float): Props =
     when (this) {
-        BackStack.State.CREATED -> created.copy(
-            offset = fromBottom(descriptor.params.bounds.height.value)
-        )
+        BackStack.State.CREATED -> created.copy(offset = Offset(0f, 2f * height))
         BackStack.State.ACTIVE -> active
         BackStack.State.STASHED -> stashed
         BackStack.State.DESTROYED -> destroyed
     }
-
-```
-
-Here's the `fromBottom` function:
-
-```
-private fun fromBottom(height: Float) = Offset(0f, 2f * height)
 
 ```
 
@@ -194,12 +181,12 @@ override fun createModifier(
     transition: Transition<BackStack.State>,
     descriptor: TransitionDescriptor<NavTarget, BackStack.State>
 ): Modifier = modifier.composed {
-
+    val height = descriptor.params.bounds.height.value
     ...
 
     val offset by transition.animateOffset(
         transitionSpec = transitionSpec,
-        targetValueByState = { it.targetProps(descriptor).offset },
+        targetValueByState = { it.targetProps(height).offset },
         label = ""
     )
 
@@ -245,19 +232,19 @@ override fun createModifier(
     ...
 
     val scale by transition.animateFloat(
-        transitionSpec = { tween(1000) },
-        targetValueByState = { it.targetProps(descriptor).scale },
+        transitionSpec = floatSpec,
+        targetValueByState = { it.targetProps(height).scale },
         label = ""
     )
 
     this
-        .scale(scale)
         .offset {
             IntOffset(
                 x = (offset.x * density).roundToInt(),
                 y = (offset.y * density).roundToInt()
             )
         }
+        .scale(scale)
         .alpha(alpha)
 }
 
