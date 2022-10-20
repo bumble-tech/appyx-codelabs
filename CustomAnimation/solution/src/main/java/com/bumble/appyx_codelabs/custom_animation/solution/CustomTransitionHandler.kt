@@ -18,7 +18,8 @@ import com.bumble.appyx.navmodel.backstack.BackStack
 import kotlin.math.roundToInt
 
 class CustomTransitionHandler<NavTarget>(
-    private val transitionSpec: TransitionSpec<BackStack.State, Offset>
+    private val offsetSpec: TransitionSpec<BackStack.State, Offset>,
+    private val floatSpec: TransitionSpec<BackStack.State, Float>,
 ) : ModifierTransitionHandler<NavTarget, BackStack.State>() {
 
     private data class Props(
@@ -37,45 +38,40 @@ class CustomTransitionHandler<NavTarget>(
         transition: Transition<BackStack.State>,
         descriptor: TransitionDescriptor<NavTarget, BackStack.State>
     ): Modifier = modifier.composed {
+        val height = descriptor.params.bounds.height.value
 
         val alpha by transition.animateFloat(
-            transitionSpec = { tween(2000) },
-            targetValueByState = { it.targetProps(descriptor).alpha },
+            transitionSpec = floatSpec,
+            targetValueByState = { it.targetProps(height).alpha },
             label = ""
         )
 
         val offset by transition.animateOffset(
-            transitionSpec = transitionSpec,
-            targetValueByState = { it.targetProps(descriptor).offset },
+            transitionSpec = offsetSpec,
+            targetValueByState = { it.targetProps(height).offset },
             label = ""
         )
 
         val scale by transition.animateFloat(
-            transitionSpec = { tween(1000) },
-            targetValueByState = { it.targetProps(descriptor).scale },
+            transitionSpec = floatSpec,
+            targetValueByState = { it.targetProps(height).scale },
             label = ""
         )
 
         this
-            .scale(scale)
             .offset {
                 IntOffset(
                     x = (offset.x * density).roundToInt(),
                     y = (offset.y * density).roundToInt()
                 )
             }
+            .scale(scale)
             .alpha(alpha)
     }
 
-    private fun fromBottom(height: Float) = Offset(0f, 2f * height)
-
-    private fun BackStack.State.targetProps(
-        descriptor: TransitionDescriptor<NavTarget, BackStack.State>,
-    ): Props =
+    private fun BackStack.State.targetProps(height: Float): Props =
         when (this) {
-            BackStack.State.CREATED -> created.copy(
-                offset = fromBottom(descriptor.params.bounds.height.value)
-            )
+            BackStack.State.CREATED -> created.copy(offset = Offset(0f, 2f * height))
             BackStack.State.ACTIVE -> active
             BackStack.State.STASHED -> stashed
             BackStack.State.DESTROYED -> destroyed
@@ -84,8 +80,12 @@ class CustomTransitionHandler<NavTarget>(
 
 @Composable
 fun <R> rememberCustomTransitionHandler(
-    transitionSpec: TransitionSpec<BackStack.State, Offset> = { spring(stiffness = Spring.StiffnessVeryLow) }
+    offsetSpec: TransitionSpec<BackStack.State, Offset> = { spring(stiffness = Spring.StiffnessVeryLow) },
+    floatSpec: TransitionSpec<BackStack.State, Float> = { spring(stiffness = Spring.StiffnessVeryLow) }
 ): ModifierTransitionHandler<R, BackStack.State> =
     remember {
-        CustomTransitionHandler(transitionSpec = transitionSpec)
+        CustomTransitionHandler(
+            offsetSpec = offsetSpec,
+            floatSpec = floatSpec
+        )
     }

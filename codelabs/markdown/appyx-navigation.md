@@ -7,6 +7,7 @@ authors: Vlad
 
 # Navigation with Appyx
 
+
 <!-- ------------------------ -->
 ## Getting started
 Duration: 1
@@ -38,7 +39,7 @@ git clone git@github.com:bumble-tech/appyx-codelabs.git
 
 This tutorial and the `TODOs` will help you build a simple app where we'll navigate from one screen to another.
 
-If at any point you're feeling stuck, check out the solution inside the project.
+If at any point you're feeling stuck, you can always check out the solution inside the project.
 
 <aside>The <strong>appyx-codelabs</strong> repo contains starter code for all codelabs in the pathway.<br/>
 For this codelab, use the <strong>SimpleApp</strong> project.
@@ -54,6 +55,7 @@ The project contains two modules:<br/>
 </aside>
 
 Check our [official page](https://bumble-tech.github.io/appyx/) for the latest release.
+
 
 <!-- ------------------------ -->
 ## Add a parent node
@@ -98,6 +100,7 @@ override fun resolve(navTarget: NavTarget, buildContext: BuildContext) =
     }
 
 ```
+
 
 <!-- ------------------------ -->
 ## Add a back stack
@@ -185,6 +188,7 @@ There are other transition handlers, check out `remeberBackstackSlider()` and yo
 transitionHandler = rememberBackstackFader(transitionSpec = { tween(1000) })
 
 ```
+
 
 <!-- ------------------------ -->
 ## Improving the first child node
@@ -292,6 +296,7 @@ override fun resolve(
 
 Please notice here that we're using the `backStack` to push the second child when the button is pressed.
 
+
 <!-- ------------------------ -->
 ## Launch
 Duration: 1
@@ -299,6 +304,7 @@ Duration: 1
 Launch your app. It will look like this:
 
 <img src="assets/appyx-nav-demo.gif" alt="demo" width="200"/>
+
 
 <!-- ------------------------ -->
 ## Where to go from here

@@ -56,6 +56,7 @@ class RootNode(
             ) {
                 Children(
                     navModel = backStack,
+                    modifier = modifier,
                     transitionHandler = rememberCustomTransitionHandler(),
                 ) {
                     children<NavTarget> { child ->

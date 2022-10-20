@@ -14,7 +14,8 @@ import com.bumble.appyx.core.navigation.transition.TransitionSpec
 import com.bumble.appyx.navmodel.backstack.BackStack
 
 class CustomTransitionHandler<NavTarget>(
-    private val transitionSpec: TransitionSpec<BackStack.State, Offset>
+    private val offsetSpec: TransitionSpec<BackStack.State, Offset>,
+    private val floatSpec: TransitionSpec<BackStack.State, Float>,
 ) : ModifierTransitionHandler<NavTarget, BackStack.State>() {
 
     // TODO: (1) Define properties to animate
@@ -40,8 +41,12 @@ class CustomTransitionHandler<NavTarget>(
 
 @Composable
 fun <NavTarget> rememberCustomTransitionHandler(
-    transitionSpec: TransitionSpec<BackStack.State, Offset> = { spring(stiffness = Spring.StiffnessVeryLow) }
+    offsetSpec: TransitionSpec<BackStack.State, Offset> = { spring(stiffness = Spring.StiffnessVeryLow) },
+    floatSpec: TransitionSpec<BackStack.State, Float> = { spring(stiffness = Spring.StiffnessVeryLow) }
 ): ModifierTransitionHandler<NavTarget, BackStack.State> =
     remember {
-        CustomTransitionHandler(transitionSpec = transitionSpec)
+        CustomTransitionHandler(
+            offsetSpec = offsetSpec,
+            floatSpec = floatSpec
+        )
     }
