@@ -13,18 +13,21 @@ Duration: 1
 
 ### Before you begin
 
-In the previous [codelab](www.previouscodelab.bumble) we've seen how to navigate using `Appyx`.
-We're going to see the power of `Appyx's` transition handlers.
+In the previous [codelab](www.previouscodelab.bumble) we've seen how to navigate using Appyx.
+Now we're going to leverage the power of Appyx transition handlers.
+
 
 ### What you'll do
 
 1. Model the animation with states
 2. Associate the states with UI properties
-3. Use a custom transition handler.
+3. Use a custom transition handler
+
 
 ### What you'll build
 
 <img src="assets/custom-animation-demo.gif" alt="demo" width="200"/>
+
 
 ### Access the code
 
@@ -59,6 +62,10 @@ Check our [official page](https://bumble-tech.github.io/appyx/) for the latest r
 ## Describe state transitions
 Duration: 1
 
+Relevant pages from the Appyx project page:
+
+- [BackStack](https://bumble-tech.github.io/appyx/navmodel/backstack/)
+
 In this example we're using a `BackStack`.
 This defines 4 states for a child:
 
@@ -73,13 +80,15 @@ The diagram below illustrates the transitions from one state to the next:
 
 
 <!-- ------------------------ -->
-## Associate states with UI properties
+## Defining UI properties
 
-With Appyx, we can use any UI property for transition animations that we can represent with a Compose `Modifier`.
+Relevant pages from the Appyx project page:
 
-That’s a lot of power! And the best part is that it’s very easy to do so. Let’s begin by defining the properties we’ll want to animate. This is purely our choice:
+- [Transitions](https://bumble-tech.github.io/appyx/ui/transitions/)
 
-Add the following inside `CustomTransitionHandler`
+When navigating with Appyx, we can animate any UI property that we can represent with a Compose `Modifier`.
+
+It’s very easy to do so! In this case, we'll want scale, offset, and alpha animations. Let's add the following inside `CustomTransitionHandler`:
 
 ```
 private data class Props(
@@ -98,19 +107,26 @@ Next, let’s define some actual values representing our key states.
 
 The first thing we'll do is crossfade between states.
 
-Start off with this:
+### How properties map to states
+
+Let's start off with creating different props instances:
 
 ```
 private val created = Props()
 private val active = created.copy(alpha = 1f)
-private val stashed = active.copy(alpha = 0f)
+private val stashed = active.copy(alpha = 0.5f)
 private val destroyed = active.copy(alpha = 0f)
 
 ```
 
-Here we're saying that when an element is `CREATED` or `ACTIVE` it should be visible, invisible when it's `DESTROYED` and partially visible when it's `STASHED`.
+Read alpha values as a percentage, where `0` = `0%` (hidden), `1` = `100%` (completely visible).
 
-Define the mappings between the current state and the UI properties:
+Here we're saying that when an element is
+- `CREATED` or `ACTIVE`,  it should be visible
+- `DESTROYED` it should be invisible
+- `STASHED` it should be partially visible
+
+Now let's define the mappings between the current state and the UI properties:
 
 ```
 private fun BackStack.State.targetProps(): Props =
@@ -123,7 +139,9 @@ private fun BackStack.State.targetProps(): Props =
 
 ```
 
-Add this to our `Modifier`.
+### Animating property changes
+
+Let's add this to our `Modifier`. We're mapping the current state (`it` inside the `animateFloat` block) to a props value (`.targetProps()`)
 
 ```
 override fun createModifier(
@@ -144,19 +162,19 @@ override fun createModifier(
 
 ```
 
-<aside>
-To use the newly updated <strong>TransitionHandler</strong> open up your <strong>RootNode</strong> and replace:</br>
+To use the newly updated `TransitionHandler` open up your `RootNode` and replace
 
-<strong>rememberBackstackSlider()</strong> </br>
-with </br>
-<strong>remeberCustomTransitionHandler()</strong> </br>
-</aside>
+`rememberBackstackSlider()`
+
+with
+
+`remeberCustomTransitionHandler()`
 
 
 <!-- ------------------------ -->
 ## Slide in from the bottom
 
-This was neat and simple, but let's kick it up a notch.
+This was neat and simple, but let's kick it up a notch!
 
 When we're creating a new item let's push it in from the bottom of the screen.
 
@@ -181,12 +199,12 @@ override fun createModifier(
     transition: Transition<BackStack.State>,
     descriptor: TransitionDescriptor<NavTarget, BackStack.State>
 ): Modifier = modifier.composed {
-    val height = descriptor.params.bounds.height.value
+    val height = descriptor.params.bounds.height.value // we get access to width & height here
     ...
 
     val offset by transition.animateOffset(
         transitionSpec = transitionSpec,
-        targetValueByState = { it.targetProps(height).offset },
+        targetValueByState = { it.targetProps(height).offset }, 
         label = ""
     )
 
@@ -257,7 +275,7 @@ That's it!
 ## Launch
 Duration: 1
 
-Launch your app. It will look like this:
+Launch your app. It should look like this:
 
 <img src="assets/custom-animation-demo.gif" alt="demo" width="200"/>
 
