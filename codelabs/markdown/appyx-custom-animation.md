@@ -266,4 +266,6 @@ Launch your app. It will look like this:
 ## Where to go from here
 Duration: 0
 
+🎉 Congrats for completing this codelab! 🎉
+
 Check out other code labs to learn more about Appyx.

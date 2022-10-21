@@ -177,6 +177,8 @@ Launch your app! It should look like this:
 ## Where to go from here
 Duration: 0
 
+🎉 Congrats for completing this codelab! 🎉
+
 Check out other code labs to start using the more advanced features of Appyx!
 
 For more information on Nodes you can check out the [Structuring your app navigation](https://bumble-tech.github.io/appyx/apps/structure/) section on the project page.

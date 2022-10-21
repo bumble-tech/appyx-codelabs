@@ -14,19 +14,21 @@ Duration: 1
 
 ### Before you begin
 
-In the previous [codelab](www.previouscodelab.bumble) we've built a simple app using `Appyx`.
+In the previous [codelab](www.previouscodelab.bumble) we've built a simple app using Appyx.
 We're going to extend that and add navigation.
+
 
 ### What you'll do
 
-1. Create a `ParentNode`
-2. Add a `NavModel`
+1. Create a `ParentNode` that will have 2 child nodes
+2. Add a `NavModel` to control navigation
 3. Add transitions
-4. Navigate with Appyx
+
 
 ### What you'll build
 
 <img src="assets/appyx-nav-demo.gif" alt="demo" width="200"/>
+
 
 ### Access the code
 
@@ -54,17 +56,24 @@ The project contains two modules:<br/>
 </ul>
 </aside>
 
-Check our [official page](https://bumble-tech.github.io/appyx/) for the latest release.
+You can refer to our [Changelog](https://bumble-tech.github.io/appyx/releases/changelog/) for the latest release version.
 
 
 <!-- ------------------------ -->
 ## Add a parent node
 Duration: 1
 
-If you run the `app` now, it just shows a screen that's built with `Appyx`.
-This isn't very interesting, let's add more so we can understand how navigation works with `Appyx`.
+Relevant pages from the Appyx project page:
 
-We define the possible destinations using a `sealed class` inside our `RootNode`.
+- [Structuring your app navigation](https://bumble-tech.github.io/appyx/apps/structure/)
+- [Composable navigation](https://bumble-tech.github.io/appyx/navigation/composable-navigation/)
+
+If you run the `app` now, it just shows a screen that's built with Appyx.
+This isn't very interesting, let's add more so we can understand how navigation works with Appyx.
+
+### Defining navigation targets
+
+We define the possible navigation targets using a `sealed class` inside our `RootNode`.
 
 ```
 sealed class NavTarget {
@@ -88,9 +97,16 @@ class RootNode(
 
 ```
 
-`ParentNode` expects us to implement the abstract method `resolve`. This is the way we link our navigation targets to other nodes.
+This will allow it to have a `navModel`, and actually change its own navigation destinations.
 
-For now we'll add a simple implementation for this function. Let's use the `node(buildContext) { modifier -> ...}` method to define some placeholders for the time being -- we'll soon make them more appealing.
+
+### Resolving navigation targets
+
+`ParentNode` expects us to implement the abstract method `resolve`. This is the way we associate our navigation targets to actual `Node` instances.
+
+The good news is we don't even need another `Node` – we can use simple placeholders until we build one. 
+
+Let's use the `node(buildContext) { modifier -> ...}` method to do that as a first step – we'll soon make it more appealing!
 
 ```
 override fun resolve(navTarget: NavTarget, buildContext: BuildContext) =
@@ -106,8 +122,13 @@ override fun resolve(navTarget: NavTarget, buildContext: BuildContext) =
 ## Add a back stack
 Duration: 1
 
+Relevant pages from the Appyx project page:
+
+- [Navigation models](https://bumble-tech.github.io/appyx/navmodel/)
+- [BackStack](https://bumble-tech.github.io/appyx/navmodel/backstack/)
+
 This project wouldn't compile just yet. `ParentNode` expects us to pass an instance of a `NavModel`.
-`NavModel` is the main control structure in any case when we want to add children.
+`NavModel` is the main point of control when we add children and want to switch between them.
 
 We'll use a familiar `NavModel`, a `BackStack`.
 
@@ -116,13 +137,15 @@ In the previous step we added a `TODO()`, we'll address it now:
 ```
 class RootNode(
     buildContext: BuildContext,
-    private val backStack: BackStack<NavTarget> = BackStack(
+    // Add the following block.
+    // Feel free to use static imports to make it shorter!
+    private val backStack: BackStack<RootNode.NavTarget> = BackStack(
         initialElement = RootNode.NavTarget.Child1,
         savedStateMap = buildContext.savedStateMap
     )
 ) : ParentNode<RootNode.NavTarget>(
     buildContext = buildContext,
-    navModel = backStack // replace the TODO() with this
+    navModel = backStack // <-- replace the TODO() with this
 ) {
     ...
 }
@@ -159,21 +182,21 @@ override fun View(modifier: Modifier) {
         Children(
             navModel = backStack,
             modifier = Modifier.fillMaxSize()
-        ) {
-            children<NavTarget> { child ->
-                child()
-            }
-        }
+        )
     }
 }
 
 ```
 
 <!-- ------------------------ -->
-## Add transitions
+## Adding transitions
 Duration: 0
 
-We'll add fading transitions with this one-liner:
+Relevant pages from the Appyx project page:
+
+- [Transitions](https://bumble-tech.github.io/appyx/ui/transitions/)
+
+As a first step let's add fading transitions! It's a one-liner:
 
 ```
 Children(
@@ -183,27 +206,28 @@ Children(
 
 ```
 
-There are other transition handlers, check out `remeberBackstackSlider()` and you can supply a `transionSpec` in both cases: 
+There are other transition handlers, such as `rememberBackstackSlider()` – you can supply a `transionSpec` in both cases: 
 ```
-transitionHandler = rememberBackstackFader(transitionSpec = { tween(1000) })
+transitionHandler = rememberBackstackFader(transitionSpec = { spring })
+```
 
-```
+You can also create your own transitions easily. We'll cover this topic in another codelab.
 
 
 <!-- ------------------------ -->
 ## Improving the first child node
 Duration: 1
 
-Let's update our child nodes to look nicer.
+Let's update our child nodes to look nicer. 
 
 Open `Child1Node.kt`. We'll need to make this class inherit from `Node`.
 
-Copy the following code, this will be the first screen in our app.
+Copy the following code, this will be the first screen in our app. Note that we have a button and a callback for triggering a back stack change soon. 
 
 ```
 class Child1Node(
     buildContext: BuildContext,
-    private val onButtonPressed: () -> Unit
+    private val onButtonPressed: () -> Unit // <- This is how we'll trigger a change in the parent
 ) : Node(buildContext) {
 
     @Composable
@@ -227,7 +251,7 @@ class Child1Node(
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
                 Button(
-                    onClick = { onButtonPressed() },
+                    onClick = { onButtonPressed() }, // <- Don't forget to use the callback
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = appyx_yellow1,
                         contentColor = appyx_dark
@@ -278,9 +302,14 @@ class Child2Node(buildContext: BuildContext) : Node(buildContext) {
 
 ```
 
+<!-- ------------------------ -->
+## Connecting the dots
+Duration: 1
 
-Having done this, let's use these newly created child nodes instead of the placeholders.
-In your `RootNode` let's update the `resolve` function like so:
+
+Let's now use these newly created child nodes instead of the placeholders!
+
+Simply update the `resolve` function in `RootNode`:
 
 ```
 override fun resolve(
@@ -294,14 +323,14 @@ override fun resolve(
 
 ```
 
-Please notice here that we're using the `backStack` to push the second child when the button is pressed.
+Note how we're finally passing the callback that will push the second child to the back stack when the button is pressed.
 
 
 <!-- ------------------------ -->
 ## Launch
 Duration: 1
 
-Launch your app. It will look like this:
+Launch your app! It should look like this:
 
 <img src="assets/appyx-nav-demo.gif" alt="demo" width="200"/>
 
@@ -310,4 +339,6 @@ Launch your app. It will look like this:
 ## Where to go from here
 Duration: 0
 
-Check out other code labs to learn more about Appyx.
+🎉 Congrats for completing this codelab! 🎉
+
+Check out the other code labs to learn more about Appyx.
