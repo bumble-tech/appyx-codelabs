@@ -153,7 +153,7 @@ Let's change the `onCreate` method to host our `RootNode`:
         super.onCreate(savedInstanceState)
         setContent {
             HelloAppyxTheme {
-                NodeHost(integrationPoint = integrationPoint) {
+                NodeHost(integrationPoint = appyxIntegrationPoint) {
                     RootNode(it)
                 }
             }

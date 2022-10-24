@@ -14,6 +14,7 @@ Duration: 1
 
 ### Before you begin
 
+<!-- TODO: update the previous code lab link -->
 In the previous [codelab](www.previouscodelab.bumble) we've built a simple app using Appyx.
 We're going to extend that and add navigation.
 
@@ -111,8 +112,18 @@ Let's use the `node(buildContext) { modifier -> ...}` method to do that as a fir
 ```
 override fun resolve(navTarget: NavTarget, buildContext: BuildContext) =
     when (navTarget) {
-        is RootNode.NavTarget.Child1 -> node(buildContext) { Text(text = "Placeholder for child 1") }
-        is RootNode.NavTarget.Child2 -> node(buildContext) { Text(text = "Placeholder for child 2") }
+        is RootNode.NavTarget.Child1 -> node(buildContext) {
+            Text(
+                text = "Placeholder for child 1",
+                color = MaterialTheme.colors.onBackground
+            )
+        }
+        is RootNode.NavTarget.Child2 -> node(buildContext) {
+            Text(
+                text = "Placeholder for child 2",
+                color = MaterialTheme.colors.onBackground
+            )
+        }
     }
 
 ```
@@ -188,30 +199,11 @@ override fun View(modifier: Modifier) {
 
 ```
 
-<!-- ------------------------ -->
-## Adding transitions
-Duration: 0
+Your app will look like this:
 
-Relevant pages from the Appyx project page:
+<img src="assets/appyx-navigation-step-3.png" alt="demo" width="200"/>
 
-- [Transitions](https://bumble-tech.github.io/appyx/ui/transitions/)
-
-As a first step let's add fading transitions! It's a one-liner:
-
-```
-Children(
-    ...
-    transitionHandler = rememberBackstackFader()
-)
-
-```
-
-There are other transition handlers, such as `rememberBackstackSlider()` – you can supply a `transionSpec` in both cases: 
-```
-transitionHandler = rememberBackstackFader(transitionSpec = { spring })
-```
-
-You can also create your own transitions easily. We'll cover this topic in another codelab.
+We can't navigate to the second child yet but don't worry we'll fix that in the next steps.
 
 
 <!-- ------------------------ -->
@@ -266,6 +258,11 @@ class Child1Node(
 
 ```
 
+The first screen will look like this:
+
+<img src="assets/appyx-navigation-step-5.png" alt="demo" width="200"/>
+
+
 <!-- ------------------------ -->
 ## And the second
 
@@ -302,6 +299,11 @@ class Child2Node(buildContext: BuildContext) : Node(buildContext) {
 
 ```
 
+The second screen will look like this:
+
+<img src="assets/appyx-navigation-step-6.png" alt="demo" width="200"/>
+
+
 <!-- ------------------------ -->
 ## Connecting the dots
 Duration: 1
@@ -324,6 +326,33 @@ override fun resolve(
 ```
 
 Note how we're finally passing the callback that will push the second child to the back stack when the button is pressed.
+
+
+<!-- ------------------------ -->
+## Adding transitions
+Duration: 0
+
+Relevant pages from the Appyx project page:
+
+- [Transitions](https://bumble-tech.github.io/appyx/ui/transitions/)
+
+As a first step let's add fading transitions! It's a one-liner:
+
+```
+Children(
+    ...
+    transitionHandler = rememberBackstackFader()
+)
+
+```
+
+There are other transition handlers, such as `rememberBackstackSlider()` – you can supply a `transionSpec` in both cases: 
+```
+transitionHandler = rememberBackstackFader(transitionSpec = { spring() })
+
+```
+
+You can also create your own transitions easily. We'll cover this topic in another codelab.
 
 
 <!-- ------------------------ -->

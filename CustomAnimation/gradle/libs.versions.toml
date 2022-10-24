@@ -1,7 +1,7 @@
 # keep sorted please, use Edit -> Sort Lines
 
 [versions]
-appyx = "1.0-alpha09"
+appyx = "1.0.0-rc02"
 androidCompileSdk = "32"
 androidMinSdk = "21"
 androidTargetSdk = "32"
