@@ -30,8 +30,8 @@ class CustomTransitionHandler<NavTarget>(
 
     private val created = Props()
     private val active = created.copy(alpha = 1f, scale = 1f)
-    private val stashed = active.copy(alpha = 0.5f, scale = 0.6f)
-    private val destroyed = active.copy(alpha = 0f, scale = 1.25f)
+    private val stashed = active.copy(alpha = 0f, scale = 0.6f)
+    private val destroyed = stashed.copy(scale = 1.25f)
 
     override fun createModifier(
         modifier: Modifier,
@@ -42,19 +42,19 @@ class CustomTransitionHandler<NavTarget>(
 
         val alpha by transition.animateFloat(
             transitionSpec = floatSpec,
-            targetValueByState = { it.targetProps(height).alpha },
+            targetValueByState = { it.toProps(height).alpha },
             label = ""
         )
 
         val offset by transition.animateOffset(
             transitionSpec = offsetSpec,
-            targetValueByState = { it.targetProps(height).offset },
+            targetValueByState = { it.toProps(height).offset },
             label = ""
         )
 
         val scale by transition.animateFloat(
             transitionSpec = floatSpec,
-            targetValueByState = { it.targetProps(height).scale },
+            targetValueByState = { it.toProps(height).scale },
             label = ""
         )
 
@@ -69,7 +69,7 @@ class CustomTransitionHandler<NavTarget>(
             .alpha(alpha)
     }
 
-    private fun BackStack.State.targetProps(height: Float): Props =
+    private fun BackStack.State.toProps(height: Float): Props =
         when (this) {
             BackStack.State.CREATED -> created.copy(offset = Offset(0f, 2f * height))
             BackStack.State.ACTIVE -> active

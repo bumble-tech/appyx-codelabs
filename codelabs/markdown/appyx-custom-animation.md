@@ -13,6 +13,7 @@ Duration: 1
 
 ### Before you begin
 
+<!-- TODO: update the previous code lab link -->
 In the previous [codelab](www.previouscodelab.bumble) we've seen how to navigate using Appyx.
 Now we're going to leverage the power of Appyx transition handlers.
 
@@ -114,8 +115,8 @@ Let's start off with creating different props instances:
 ```
 private val created = Props()
 private val active = created.copy(alpha = 1f)
-private val stashed = active.copy(alpha = 0.5f)
-private val destroyed = active.copy(alpha = 0f)
+private val stashed = active.copy(alpha = 0f)
+private val destroyed = stashed
 
 ```
 
@@ -123,13 +124,12 @@ Read alpha values as a percentage, where `0` = `0%` (hidden), `1` = `100%` (comp
 
 Here we're saying that when an element is
 - `CREATED` or `ACTIVE`,  it should be visible
-- `DESTROYED` it should be invisible
-- `STASHED` it should be partially visible
+- `STASHED` or `DESTROYED` it should be invisible
 
 Now let's define the mappings between the current state and the UI properties:
 
 ```
-private fun BackStack.State.targetProps(): Props =
+private fun BackStack.State.toProps(): Props =
     when(this) {
         BackStack.State.CREATED -> created
         BackStack.State.ACTIVE -> active
@@ -141,7 +141,7 @@ private fun BackStack.State.targetProps(): Props =
 
 ### Animating property changes
 
-Let's add this to our `Modifier`. We're mapping the current state (`it` inside the `animateFloat` block) to a props value (`.targetProps()`)
+Let's add this to our `Modifier`. We're mapping the current state (`it` inside the `animateFloat` block) to a props value (`.toProps()`)
 
 ```
 override fun createModifier(
@@ -170,6 +170,10 @@ with
 
 `remeberCustomTransitionHandler()`
 
+Your app should look like this:
+
+<img src="assets/custom-animation-step-4.gif" alt="demo" width="200"/>
+
 
 <!-- ------------------------ -->
 ## Slide in from the bottom
@@ -178,10 +182,10 @@ This was neat and simple, but let's kick it up a notch!
 
 When we're creating a new item let's push it in from the bottom of the screen.
 
-Change your `targetProps` function:
+Change your `toProps` function:
 
 ```
-private fun BackStack.State.targetProps(height: Float): Props =
+private fun BackStack.State.toProps(height: Float): Props =
     when (this) {
         BackStack.State.CREATED -> created.copy(offset = Offset(0f, 2f * height))
         BackStack.State.ACTIVE -> active
@@ -204,7 +208,7 @@ override fun createModifier(
 
     val offset by transition.animateOffset(
         transitionSpec = transitionSpec,
-        targetValueByState = { it.targetProps(height).offset }, 
+        targetValueByState = { it.toProps(height).offset }, 
         label = ""
     )
 
@@ -220,6 +224,10 @@ override fun createModifier(
 
 ```
 
+Your app should look like this:
+
+<img src="assets/custom-animation-step-5.gif" alt="demo" width="200"/>
+
 
 <!-- ------------------------ -->
 ## Make it explosive
@@ -233,8 +241,8 @@ Change the properties like this:
 ```
 private val created = Props(alpha = 0.5f)
 private val active = created.copy(alpha = 1f, scale = 1f)
-private val stashed = active.copy(alpha = 0.5f, scale = 0.6f)
-private val destroyed = active.copy(alpha = 0f, scale = 1.25f)
+private val stashed = active.copy(alpha = 0f, scale = 0.6f)
+private val destroyed = stashed.copy(scale = 1.25f)
 
 ```
 
@@ -251,7 +259,7 @@ override fun createModifier(
 
     val scale by transition.animateFloat(
         transitionSpec = floatSpec,
-        targetValueByState = { it.targetProps(height).scale },
+        targetValueByState = { it.toProps(height).scale },
         label = ""
     )
 

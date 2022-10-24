@@ -1,6 +1,6 @@
 package com.bumble.appyx_codelabs.simple_app.solution.root
 
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -72,13 +72,9 @@ class RootNode(
             }
             Children(
                 navModel = backStack,
-                transitionHandler = rememberBackstackFader(transitionSpec = { tween(1000) }),
+                transitionHandler = rememberBackstackFader(transitionSpec = { spring() }),
                 modifier = Modifier.fillMaxSize()
-            ) {
-                children<NavTarget> { child ->
-                    child()
-                }
-            }
+            )
         }
     }
 }
