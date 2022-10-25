@@ -85,7 +85,7 @@ Duration: 1
 
 Nodes are the fundamental building blocks in Appyx. 
 
-We'll learn more about them in subsequent codelabs, now we'll only leverage that they have `@Composable` views.    
+We'll learn more about them in subsequent codelabs, for now we'll only leverage that they have `@Composable` views.    
 
 Let's implement our `RootNode`:
 
@@ -182,13 +182,3 @@ Duration: 0
 Check out other code labs to start using the more advanced features of Appyx!
 
 For more information on Nodes you can check out the [Structuring your app navigation](https://bumble-tech.github.io/appyx/apps/structure/) section on the project page.
-
-
-<style>
-table {
-  border-collapse: collapse;
-  width: 100%;
-  border: 1px solid #ddd;
-}
-
-</style>
