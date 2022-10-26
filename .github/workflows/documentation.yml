@@ -3,7 +3,7 @@ name: Deploy Codelabs HTML to GitHub Pages
 on:
   push:
     branches:
-      - gh-pages
+      - main
   workflow_dispatch:
 
 jobs:
