@@ -12,6 +12,20 @@ Don't know yet what Appyx is?
 Find out by checking the oficial doc:
 https://bumble-tech.github.io/appyx/
 
+## Codelabs
+
+### [Hello World with Appyx](https://vladcipariu91.github.io/appyx-codelabs-2/appyx-hello-world)
+
+Learn the basics of Appyx
+
+### [Navigation](https://vladcipariu91.github.io/appyx-codelabs-2/appyx-navigation)
+
+Learn how Appyx navigation works 
+
+### [Custom animation](https://vladcipariu91.github.io/appyx-codelabs-2/appyx-custom-animation)
+
+Learn how to unleash powerful transition
+
 
 ## License
 
