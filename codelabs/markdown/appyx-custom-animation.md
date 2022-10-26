@@ -5,7 +5,7 @@ tags: Appyx
 status: WIP
 authors: Vlad
 
-# Animating transitions with Appyx
+# Animating transitions with Appyx WOWOWOW
 
 <!-- ------------------------ -->
 ## Getting started
