@@ -2,4 +2,4 @@
 **/.DS_Store
 codelabs/html
 !codelabs/html/index.html
-!codelabs/html/favicon.html
+!codelabs/html/favicon.svg
