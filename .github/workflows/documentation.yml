@@ -19,16 +19,12 @@ jobs:
         with:
           python-version: '3.x'
       - run: ./codelabs/tooling/codelab.py all
-      - run: git status
-      - run: ls
-      - run: cd codelabs && ls
-      - run: cd codelabs && cd html && ls
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           path: "codelabs/html/"
       - run: pip install mkdocs-material
-      - run: mkdocs gh-deploy --force
+      - run: mkdocs build --strict
       # - run: git fetch
       # - run: git branch
       # - run: git add -f codelabs/html/
