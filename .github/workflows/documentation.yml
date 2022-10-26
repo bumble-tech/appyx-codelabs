@@ -32,7 +32,7 @@ jobs:
           commit_message: Automated changes
           branch: gh-pages
           commit_options: '--no-verify --signoff'
-          file_pattern: 'codelabs/html/*'
+          file_pattern: 'codelabs/html/appyx-hello-world codelabs/html/appyx-navigation codelabs/html/appyx-custom-animation'
 
       # - run: |
       #     git checkout gh-pages
