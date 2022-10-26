@@ -22,6 +22,7 @@ jobs:
       - run: git status
       - run: ls
       - run: cd codelabs && ls
+      - run: cd codelabs && cd html && ls
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
