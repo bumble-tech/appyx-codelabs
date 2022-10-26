@@ -24,7 +24,7 @@ Learn how Appyx navigation works
 
 ### [Custom animation](https://vladcipariu91.github.io/appyx-codelabs-2/appyx-custom-animation)
 
-Learn how to unleash powerful transition
+Learn how to unleash powerful transitions
 
 
 ## License

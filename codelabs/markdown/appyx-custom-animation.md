@@ -13,8 +13,7 @@ Duration: 1
 
 ### Before you begin
 
-<!-- TODO: update the previous code lab link -->
-In the previous [codelab](www.previouscodelab.bumble) we've seen how to navigate using Appyx.
+In the previous [codelab](https://vladcipariu91.github.io/appyx-codelabs-2/appyx-navigation) we've seen how to navigate using Appyx.
 Now we're going to leverage the power of Appyx transition handlers.
 
 

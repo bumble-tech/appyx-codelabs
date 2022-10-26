@@ -14,8 +14,7 @@ Duration: 1
 
 ### Before you begin
 
-<!-- TODO: update the previous code lab link -->
-In the previous [codelab](www.previouscodelab.bumble) we've built a simple app using Appyx.
+In the previous [codelab](https://vladcipariu91.github.io/appyx-codelabs-2/appyx-hello-world) we've built a simple app using Appyx.
 We're going to extend that and add navigation.
 
 
