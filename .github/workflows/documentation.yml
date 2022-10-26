@@ -21,6 +21,8 @@ jobs:
       - run: ./codelabs/tooling/codelab.py all
       - run: git status
       - run: ls
+      - run: cd codelabs
+      - run: ls
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
