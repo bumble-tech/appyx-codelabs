@@ -20,6 +20,11 @@ jobs:
           python-version: '3.x'
       - run: ./codelabs/tooling/codelab.py all
       - run: git status
+      - run: ls
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: "/codelabs/html/"
   # deploy:
   #   name: Deploy
   #   needs: build
