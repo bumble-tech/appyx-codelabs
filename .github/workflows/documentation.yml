@@ -27,11 +27,18 @@ jobs:
       #   uses: actions/upload-artifact@v3
       #   with:
       #     path: "codelabs/html/"
-      - run: |
-          git checkout gh-pages
-          git add -f codelabs/html
-          git commit -m "update codelabs"
-          git push
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automated changes
+          branch: gh-pages
+          commit_options: '--no-verify --signoff'
+          file_pattern: 'codelabs/html/*'
+
+      # - run: |
+      #     git checkout gh-pages
+      #     git add -f codelabs/html
+      #     git commit -m "update codelabs"
+      #     git push
 
   # deploy:
   #   name: Deploy
