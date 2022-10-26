@@ -30,7 +30,7 @@ jobs:
       - run: git fetch
       - run: git branch
       - run: git add -f codelabs/html/
-      - run: git checkout gh-pages
+      - run: git checkout -f gh-pages
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated changes
