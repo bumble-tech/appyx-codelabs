@@ -23,10 +23,15 @@ jobs:
       - run: ls
       - run: cd codelabs && ls
       - run: cd codelabs && cd html && ls
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          path: "codelabs/html/"
+      # - name: Upload Artifact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     path: "codelabs/html/"
+      - run: |
+          git checkout gh-pages
+          git add codelabs/html
+          git commit -m "update codelabs"
+          git push
 
   # deploy:
   #   name: Deploy
