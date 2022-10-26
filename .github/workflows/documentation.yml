@@ -21,23 +21,15 @@ jobs:
       - run: ./codelabs/tooling/codelab.py all
       - run: git status
       - run: ls
+
+  deploy:
+    name: Deploy
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          path: "/codelabs/html/"
-  # deploy:
-  #   name: Deploy
-  #   needs: build
-  #   permissions:
-  #     pages: write
-  #     id-token: write
-
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v1
+          path: "/codelabs/html"
