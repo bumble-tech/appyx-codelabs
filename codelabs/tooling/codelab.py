@@ -68,6 +68,23 @@ def generatCodelab(parameters):
         # print("Couldn't find codelab file {}".format(codeLabFile))
         # printMan()
 
+def generateCodelabs():
+    markdownDir = "codelabs/markdown"
+    try:
+        files = os.listdir(markdownDir)
+        for file in files:
+            if file.find(".md") != -1:
+                command = "claat export -o {} {}".format(f'\"codelabs/html\"',f'\"{markdownDir}/{file}\"')
+                os.popen(command)
+        
+    except Exception as e:
+        print("Couldn't generate files for ", filePath)
+        print(str(e) + "\n\n")
+        print("Did you provide the correct id?")
+        print("Use \"new\" to create a new codelab. Example: ./codelab.py new")
+
+    return
+
 
 def checkArg(parameters):
     argument = ""
@@ -82,6 +99,8 @@ def checkArg(parameters):
         createNewCodelab()
     elif str(parameters[1]) == "gen":
         generatCodelab(parameters)
+    elif str(parameters[1]) == "all":
+        generateCodelabs()
     else:
         print("Wrong arguments.")
         printMan()

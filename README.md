@@ -12,34 +12,20 @@ Don't know yet what Appyx is?
 Find out by checking the oficial doc:
 https://bumble-tech.github.io/appyx/
 
+## Codelabs
 
-## Building codelabs
+### [Hello World with Appyx](https://bumble-tech.github.io/appyx-codelabs/appyx-hello-world)
 
-Install `claat` following the tutorial [here](https://github.com/googlecodelabs/tools/tree/main/claat)
+Learn the basics of Appyx
 
-Navigate to:
-```
-/codelabs
-    /tooling
-```
+### [Navigation](https://bumble-tech.github.io/appyx-codelabs/appyx-navigation)
 
+Learn how Appyx navigation works 
 
-Run the following script:
-```
-./codelab.py gen <project-id>
-```
-(Python3 is needed to run the script)
+### [Custom animation](https://bumble-tech.github.io/appyx-codelabs/appyx-custom-animation)
 
-`project-id` is under the metadata in the .md file your building.
+Learn how to unleash powerful transitions
 
-The project will be generated under: 
-
-```
-/codelabs
-    /html
-        /<project-id>
-            /index.html
-```
 
 ## License
 

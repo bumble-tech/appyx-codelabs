@@ -1,0 +1,34 @@
+name: Deploy Codelabs HTML to GitHub Pages
+
+on:
+  push:
+    branches:
+      - code-labs-markdown
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '^1.19.1'
+      - run: go install github.com/googlecodelabs/tools/claat@latest
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - run: ./codelabs/tooling/codelab.py all
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: "codelabs/html/"
+      - uses: actions/deploy-pages@v1
+        id: deployment
+      
