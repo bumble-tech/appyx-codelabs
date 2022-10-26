@@ -1,4 +1,4 @@
-name: Deploy mkdocs to GitHub Pages
+name: Deploy Codelabs HTML to GitHub Pages
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-      - run: ./codelab/tooling/codelab.py all 
+      - run: ./codelabs/tooling/codelab.py all 
   # deploy:
   #   name: Deploy
   #   needs: build
