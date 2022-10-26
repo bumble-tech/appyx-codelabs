@@ -29,6 +29,7 @@ jobs:
       #     path: "codelabs/html/"
       - run: git fetch
       - run: git branch
+      - run: git add -f codelabs/html/
       - run: git checkout gh-pages
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
