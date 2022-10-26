@@ -27,7 +27,7 @@ jobs:
       #   uses: actions/upload-artifact@v3
       #   with:
       #     path: "codelabs/html/"
-      - run: git checkout gh-pages
+      - run: git branch
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated changes
