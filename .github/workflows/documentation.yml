@@ -23,18 +23,18 @@ jobs:
       - run: ls
       - run: cd codelabs && ls
       - run: cd codelabs && cd html && ls
-      # - name: Upload Artifact
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     path: "codelabs/html/"
-      - run: git fetch
-      - run: git branch
-      - run: git add -f codelabs/html/
-      - run: git checkout -f gh-pages
-      - run: git config --global user.email "vladcipariu@gmail.com"
-      - run: git config --global user.name "Vlad Cipariu"
-      - run: git commit -m "Auto changes"
-      - run: git push
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: "codelabs/html/"
+      # - run: git fetch
+      # - run: git branch
+      # - run: git add -f codelabs/html/
+      # - run: git checkout -f gh-pages
+      # - run: git config --global user.email "vladcipariu@gmail.com"
+      # - run: git config --global user.name "Vlad Cipariu"
+      # - run: git commit -m "Auto changes"
+      # - run: git push
       # - uses: stefanzweifel/git-auto-commit-action@v4
       #   with:
       #     commit_message: Automated changes
