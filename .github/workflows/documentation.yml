@@ -27,6 +27,7 @@ jobs:
       #   uses: actions/upload-artifact@v3
       #   with:
       #     path: "codelabs/html/"
+      - run: git fetch
       - run: git branch
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
