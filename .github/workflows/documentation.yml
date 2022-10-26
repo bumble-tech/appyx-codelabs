@@ -23,8 +23,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           path: "codelabs/html/"
-      - run: pip install mkdocs-material
-      - run: mkdocs build --strict
+      - uses: actions/deploy-pages@v1
 
   # deploy:
   #   name: Deploy
