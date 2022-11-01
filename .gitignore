@@ -1,6 +1,7 @@
 .idea/*
 **/.DS_Store
-codelabs/html
 !codelabs/html/index.html
 !codelabs/html/favicon.svg
 !codelabs/html/assets
+!codelabs/html/codelab-elements
+codelabs/html
