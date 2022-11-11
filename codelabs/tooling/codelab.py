@@ -74,7 +74,7 @@ def generateCodelabs():
         files = os.listdir(markdownDir)
         for file in files:
             if file.find(".md") != -1:
-                command = "claat export -o {} {}".format(f'\"codelabs/html\"',f'\"{markdownDir}/{file}\"')
+                command = "claat export -prefix '..' -o {} {}".format(f'\"codelabs/html\"',f'\"{markdownDir}/{file}\"')
                 os.popen(command)
         
     except Exception as e:
