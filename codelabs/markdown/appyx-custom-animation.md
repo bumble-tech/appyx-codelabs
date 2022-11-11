@@ -151,7 +151,7 @@ override fun createModifier(
 
     val alpha by transition.animateFloat(
         transitionSpec = floatSpec,
-        targetValueByState = { it.targetProps().alpha },
+        targetValueByState = { it.toProps().alpha },
         label = ""
     )
 
@@ -206,7 +206,7 @@ override fun createModifier(
     ...
 
     val offset by transition.animateOffset(
-        transitionSpec = transitionSpec,
+        transitionSpec = offsetSpec,
         targetValueByState = { it.toProps(height).offset }, 
         label = ""
     )
