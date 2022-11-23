@@ -15,7 +15,7 @@ def generateHTML(id):
         filePath = MD_PATH+str(id)+".md"
         os.path.exists(filePath)
         print("HTML will be generated for file ", filePath)
-        command = "claat export -o {} {}".format(DOC_PATH,filePath)
+        command = "claat export -prefix '..' -o {} {}".format(DOC_PATH,filePath)
         os.popen(command)
     except Exception as e:
         print("Couldn't generate files for ", filePath)
