@@ -12,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bumble.appyx.core.modality.BuildContext
-import com.bumble.appyx.core.node.Node
+import com.bumble.appyx.navigation.modality.BuildContext
+import com.bumble.appyx.navigation.node.Node
 
-class Child2Node(buildContext: BuildContext) : Node(buildContext) {
+class Child2Node(
+    buildContext: BuildContext
+) : Node(buildContext) {
 
     @Composable
     override fun View(modifier: Modifier) {

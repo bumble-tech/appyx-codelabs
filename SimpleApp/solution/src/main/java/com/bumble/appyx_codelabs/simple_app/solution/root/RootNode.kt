@@ -1,21 +1,28 @@
 package com.bumble.appyx_codelabs.simple_app.solution.root
 
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.bumble.appyx.core.composable.Children
-import com.bumble.appyx.core.modality.BuildContext
-import com.bumble.appyx.core.node.ParentNode
-import com.bumble.appyx.navmodel.backstack.BackStack
-import com.bumble.appyx.navmodel.backstack.operation.push
-import com.bumble.appyx.navmodel.backstack.transitionhandler.rememberBackstackFader
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.BackStackModel
+import com.bumble.appyx.components.backstack.operation.push
+import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
+import com.bumble.appyx.navigation.composable.AppyxComponent
+import com.bumble.appyx.navigation.modality.BuildContext
+import com.bumble.appyx.navigation.node.Node
+import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx_codelabs.simple_app.solution.R
 import com.bumble.appyx_codelabs.simple_app.solution.child.Child1Node
 import com.bumble.appyx_codelabs.simple_app.solution.child.Child2Node
@@ -28,11 +35,14 @@ import com.bumble.appyx_codelabs.simple_app.solution.ui.theme.appyx_dark
 class RootNode(
     buildContext: BuildContext,
     private val backStack: BackStack<NavTarget> = BackStack(
-        initialElement = Child1,
-        savedStateMap = buildContext.savedStateMap
+        model = BackStackModel(
+            initialTarget = Child1,
+            savedStateMap = buildContext.savedStateMap
+        ),
+        motionController = { BackStackFader(it) },
     ),
 ) : ParentNode<RootNode.NavTarget>(
-    navModel = backStack,
+    appyxComponent = backStack,
     buildContext = buildContext
 ) {
 
@@ -41,11 +51,8 @@ class RootNode(
         object Child2 : NavTarget()
     }
 
-    override fun resolve(
-        navTarget: NavTarget,
-        buildContext: BuildContext
-    ) =
-        when (navTarget) {
+    override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
+        when (interactionTarget) {
             is Child1 -> Child1Node(buildContext) { backStack.push(Child2) }
             is Child2 -> Child2Node(buildContext)
         }
@@ -70,9 +77,8 @@ class RootNode(
                     modifier = Modifier.padding(16.dp)
                 )
             }
-            Children(
-                navModel = backStack,
-                transitionHandler = rememberBackstackFader(transitionSpec = { spring() }),
+            AppyxComponent(
+                appyxComponent = backStack,
                 modifier = Modifier.fillMaxSize()
             )
         }

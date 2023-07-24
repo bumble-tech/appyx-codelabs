@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bumble.appyx.core.modality.BuildContext
-import com.bumble.appyx.core.node.Node
+import com.bumble.appyx.navigation.modality.BuildContext
+import com.bumble.appyx.navigation.node.Node
 import com.bumble.appyx_codelabs.simple_app.solution.ui.theme.appyx_dark
 import com.bumble.appyx_codelabs.simple_app.solution.ui.theme.appyx_yellow1
 
