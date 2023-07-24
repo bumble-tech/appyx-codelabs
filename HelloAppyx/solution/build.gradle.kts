@@ -45,7 +45,7 @@ android {
 dependencies {
 
     // Appyx
-    implementation("com.bumble.appyx:core:1.0.0-rc02")
+    implementation("com.bumble.appyx:appyx-navigation:2.0.0-alpha01")
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle)
