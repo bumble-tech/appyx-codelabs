@@ -2,7 +2,7 @@
 
 # Appyx codelabs
 
-This respository contains codelabs to learn about Appyx. You will also find one project for each codelab so you can easily follow them.
+This repository contains codelabs to learn about Appyx. You will also find one project for each codelab so you can easily follow them.
 
 
 ## Appyx
@@ -13,15 +13,18 @@ Find out by checking the oficial doc:
 https://bumble-tech.github.io/appyx/
 
 
-## Codelabs
+## Appyx 2.x Codelabs
 
 ### [Hello World with Appyx](https://bumble-tech.github.io/appyx-codelabs/appyx-hello-world)
 
-Learn the basics of Appyx
+Learn the basics of Appyx navigation
 
 ### [Navigation](https://bumble-tech.github.io/appyx-codelabs/appyx-navigation)
 
 Learn how Appyx navigation works
+
+
+## Appyx 1.x Codelabs
 
 ### [Custom animation](https://bumble-tech.github.io/appyx-codelabs/appyx-custom-animation)
 

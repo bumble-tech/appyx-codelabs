@@ -11,8 +11,8 @@ android {
         applicationId = "com.bumble.appyx_codelabs.simple_app.solution"
         minSdk = libs.versions.androidMinSdk.get().toInt()
         targetSdk = libs.versions.androidTargetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -44,8 +44,9 @@ android {
 
 dependencies {
 
-    // Core
-    implementation(libs.appyx.core)
+    // Appyx navigation
+    implementation(libs.appyx.navigation)
+    implementation(libs.appyx.backstack)
 
     // Test rules and utility classes for testing on Android
     androidTestImplementation(libs.appyx.testing.ui)

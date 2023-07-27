@@ -44,8 +44,9 @@ android {
 
 dependencies {
 
-    // Core
-    implementation(libs.appyx.core)
+    // Appyx navigation
+    implementation(libs.appyx.navigation)
+    implementation(libs.appyx.backstack)
 
     // Test rules and utility classes for testing on Android
     androidTestImplementation(libs.appyx.testing.ui)
